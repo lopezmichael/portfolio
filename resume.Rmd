@@ -1,0 +1,124 @@
+---
+title: 'Resume'
+output:
+  distill::distill_article:
+    toc:false:
+      theme: theme.css
+#favicon: "images/favicon.ico"
+github-repo: lopezmichael/portfolio
+---
+
+**This site is currently under construction.**
+
+## Professional Summary
+
+Data analyst with 3+ years of experience identifying, analyzing, and helping improve communities through policy and data.
+
+## Education
+
+**MASTER OF PUBLIC POLICY**
+
+December 2022
+
+University of Texas at Dallas
+
+
+**BACHELORS IN PSYCHOLOGY**
+
+May 2015
+
+Florida International University
+
+
+**BACHELORS IN ANTHROPOLOGY**
+
+May 2015
+
+Florida International University
+
+## Experience
+
+**ANALYTICS MANAGER 	May 2022 - Present**
+
+**Child Poverty Action Lab**
+
+* Conducted analyses for external/internal partners, aided in increasing investments in afterschool programming, child care accessibility, housing stability, and public safety programs.
+
+* Developing reports supporting data initiatives for local officials.
+
+* Presenting findings, recommendations, and results to partner organizations. 
+
+* Provide support and thought partnership to Associates, Fellows, and Leadership around the use of data to address challenges.
+
+
+**ANALYTICS ASSOCIATE	Jun 2020 - Apr 2022 **
+
+**Child Poverty Action Lab**
+
+* Developed dashboards and data tools to share insights internally to senior leadership and community stakeholders.
+
+* Performing analysis of data from local, federal, and private sources deriving insights for use in organizational strategy. 
+
+* Establishing procedures for data collection, storage, and sharing to accomplish organizational needs. 
+
+**RESEARCH PROJECT ASSISTANT	Dec 2019 - May 2020**
+
+**University of Texas Southwestern Medical Center**
+
+* Analyzed project data and produced reports for internal use.
+
+* Conducted literature and policy reviews for senior staff. 
+
+
+**HEALTH AND SOCIAL POLICY INTERN 	Jun 2019 - Oct 2019**
+
+**Children at Risk**
+
+* Lead policy and research reviews understanding the national landscape of best practices across topic areas.
+
+* Developed policy and research briefs and one-pagers examining best practices for senior leadership and state-level stakeholders.
+
+
+**RESEARCH COORDINATOR	Aug 2016 - Dec 2018**
+
+**University of Texas at Dallas**
+
+* Developed research designs and surveys, conducted studies on 300+ participants.
+
+* Recruitment, training, and management of a team of 10-15 research assistants across each semester.
+
+* Community outreach with local organizations in order to present findings to families and local leadership.
+
+## Technical
+
+* R / RStudio
+
+* ArcGIS
+
+* QGIS
+
+* Tableau
+
+* SQL
+
+* Git
+
+* Google Suite
+
+* Typeform
+
+## Skills
+
+* Data Modeling
+
+* Data Visualization
+
+* Database Management
+
+* Geospatial Analysis
+
+* Google Analytics
+
+* Process Automation
+
+* Project Management

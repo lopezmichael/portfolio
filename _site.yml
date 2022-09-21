@@ -1,0 +1,29 @@
+name: "portfolio"
+title: "Michael Lopez Project Portfolio"
+theme: theme.css
+#favicon: images/favicon.ico
+description: |
+  This repository contains links to a number of projects with Michael Lopez as the lead Data Analyst.
+output_dir: "docs"
+navbar:
+  logo:
+    image: images/logo-color.png
+    href: https://lopezmichael.github.io/portfolio/
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Resume"
+      href: resume.html
+    - text: "Projects"
+      href: projects.html
+    - text: "Contact"
+      menu:
+      - text: "eMail"
+        href: lopezmikeok@gmail.com/
+      - text: "Github"
+        href: https://github.com/lopezmichael/
+      - text: "LinkedIn"
+        href: https://www.linkedin.com/in/michael-d-lopez/
+      - text: "Twitter"
+        href: https://twitter.com/_lpzmichael/
+output: distill::distill_article

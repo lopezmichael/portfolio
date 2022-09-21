@@ -1,0 +1,15 @@
+---
+title: 'About'
+output:
+  distill::distill_article:
+    toc:false:
+      theme: theme.css
+#favicon: "images/favicon.ico"
+github-repo: lopezmichael/portfolio
+---
+
+**This site is currently under construction.**
+
+My name is Michael Lopez, and I am a data analyst with three with three years of professional experience and seven years in non-profit and academic sectors. Currently, I am an Analytics Manager with the Child Poverty Action Lab in Dallas, TX.
+
+Throughout my time as a data analyst, I have had the opportunity to work on a number of projects focused on deriving insights from data in order to direct strategy with civic, private, and non-profit organizations across North Texas. Deriving statistical insights with tools such as R, QGIS, SQL, and Tableau. I have led projects alongside organizations such as Dallas Afterschool in order to direct strategy for new programs. I have generated tools based on public eviction data that housing advocates have successfully used to distribute rent relief funds to residents across North Texas. I have also strengthened the ability of CPAL by generating reports and metrics across our core areas to track performance. As an Analyst, one of the most exciting things I enjoy doing is throwing myself at continuously bigger problems and working with a team to solve them. 
