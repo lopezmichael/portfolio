@@ -1,0 +1,603 @@
+// cpal 0.0.2
+// Bootswatch
+
+/*-- scss:defaults --*/
+$theme: "cpal" !default;
+
+//
+// Color system
+//
+
+$white:    #FFFFFF !default;
+$gray-000: #FAFAFA !default;
+$gray-100: #ccd4d5 !default;
+$gray-200: #9bc0c6 !default;
+$gray-300: #83b6bf !default;
+$gray-400: #6aacb8 !default;
+$gray-500: #449cac !default;
+$gray-600: #2690a3 !default;
+$gray-700: #008097 !default;
+$gray-800: #006274 !default;
+$gray-900: #005160 !default;
+$black:    #2f2f2f !default;
+
+$blue:    #325d88 !default;
+$indigo:  #8338ec !default;
+$purple:  #6610f2 !default;
+$pink:    #ff006e !default;
+$red:     #971700 !default;
+$orange:  #E98816 !default;
+$yellow:  #C9AA0C !default;
+$green:   #009763 !default;
+$teal:    #008097 !default;
+$cyan:    #43bccd !default;
+
+$teal-100:       #E7F7F9 !default;
+$teal-400:       #9ADAE5 !default;
+$teal-700:       #008097 !default;
+$teal-900:       #042D33 !default;
+
+$magenta-100:    #FEEBF2 !default;
+$magenta-400:    #FFCCDC !default;
+$magenta-700:    #ED018C !default;
+$magenta-900:    #881354 !default;
+
+$rust-100:       #FFE5DE !default;
+$rust-700:       #F59A7D !default;
+$rust-900:       #ED683F !default;
+
+$mustard-100:       #FFFEE2 !default;
+$mustard-400:       #FEF6C7 !default;
+$mustard-700:       #EACA2D !default;
+$mustard-900:       #C9AA0C !default;
+
+$primary:       $teal-900 !default;
+$secondary:     $magenta-700 !default;
+$success:       $green !default;
+$info:          $mustard-400 !default;
+$warning:       $rust-900 !default;
+$danger:        $magenta-900 !default;
+$light:         $gray-200 !default;
+$dark:          $gray-800 !default;
+
+$min-contrast-ratio:   2 !default;
+
+// Body
+
+$body-bg:       $white !default;
+$body-color:    $black !default;
+$link-color:    $teal-900 !default;
+
+// Links
+
+$link-color:                $success !default;
+
+// Fonts
+
+// stylelint-disable-next-line value-keyword-case
+$font-family-sans-serif:      Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$headings-font-weight:        600 !default;
+$font-family-monospace:       'Fira Code' !default;
+$headings-font-family:         Poppins !default;
+
+// Default Enable
+
+$enable-caret:                true !default;
+$enable-rounded:              true !default;
+$enable-shadows:              false !default;
+$enable-gradients:            true !default;
+$enable-transitions:          true !default;
+$enable-reduced-motion:       true !default;
+$enable-smooth-scroll:        true !default;
+$enable-grid-classes:         true !default;
+$enable-container-classes:    true !default;
+$enable-cssgrid:              true !default;
+$enable-button-pointers:      true !default;
+$enable-rfs:                  true !default;
+$enable-validation-icons:     true !default;
+$enable-negative-margins:     false !default;
+$enable-deprecation-messages: true !default;
+$enable-important-utilities:  true !default;
+
+// Dropdowns
+
+$dropdown-link-color:               $gray-600 !default;
+$dropdown-link-hover-color:         $dropdown-link-color !default;
+$dropdown-link-hover-bg:            $gray-200 !default;
+$dropdown-link-active-color:        $dropdown-link-color !default;
+$dropdown-link-active-bg:           $dropdown-link-hover-bg !default;
+
+// Navs
+
+$nav-link-padding-x:                .9rem !default;
+$nav-link-disabled-color:           $gray-300 !default;
+$nav-tabs-border-color:             $gray-300 !default;
+$nav-tabs-link-hover-border-color:  $gray-300 !default;
+$nav-tabs-link-active-bg:           $white !default;
+$nav-pills-link-active-color:       $gray-600 !default;
+$nav-pills-link-active-bg:          $gray-200 !default;
+
+// Navbar
+
+$navbar-dark-hover-color:           $white !default;
+$navbar-light-hover-color:          $black !default;
+$navbar-light-active-color:         $black !default;
+
+// Pagination
+
+$pagination-color:                  $gray-600 !default;
+$pagination-bg:                     $gray-200 !default;
+$pagination-border-color:           $gray-300 !default;
+$pagination-hover-color:            $pagination-color !default;
+$pagination-active-color:           $pagination-color !default;
+$pagination-active-bg:              $gray-300 !default;
+$pagination-active-border-color:    $gray-300 !default;
+$pagination-disabled-color:         $gray-300 !default;
+$pagination-disabled-bg:            $gray-200 !default;
+$pagination-disabled-border-color:  $pagination-border-color !default;
+
+// Cards
+
+$card-border-color:                 rgba($gray-300, .75) !default;
+$card-cap-bg:                       rgba($gray-200, .25) !default;
+
+// Popovers
+
+$popover-header-bg:                 $gray-200 !default;
+
+// Modals
+
+$modal-content-border-color:        $gray-300 !default;
+$modal-header-border-color:         $modal-content-border-color !default;
+
+// Progress bars
+
+$progress-color:                    $magenta-700 !default;
+$progress-bg:                       $gray-300 !default;
+$progress-border-radius:            10px !default;
+$progress-bar-color:                $primary !default;
+
+// List group
+
+$list-group-border-color:           $gray-300 !default;
+$list-group-hover-bg:               $gray-200 !default;
+$list-group-active-color:           $body-color !default;
+$list-group-active-bg:              $gray-200 !default;
+$list-group-active-border-color:    $gray-300 !default;
+$list-group-disabled-color:         $gray-500 !default;
+$list-group-disabled-bg:            $white !default;
+$list-group-action-color:           $list-group-active-color !default;
+$list-group-action-active-color:    $list-group-active-color !default;
+$list-group-action-active-bg:       $gray-300 !default;
+
+// Breadcrumbs
+
+$breadcrumb-padding-y:              .375rem !default;
+$breadcrumb-padding-x:              .75rem !default;
+$breadcrumb-bg:                     $pagination-bg !default;
+$breadcrumb-border-radius:          .25rem !default;
+
+// Code blocks
+$code-block-bg-alpha:               -0.8 !default;
+$code-block-bg-color:               $gray-000 !default;
+$code-color:                        $magenta-700 !default;
+$code-bg:                           $magenta-400 !default;
+
+// Close
+
+$btn-close-color:            $white !default;
+$btn-close-opacity:          .8 !default;
+$btn-close-hover-opacity:    1 !default;
+
+// Test
+div.shadecontent
+{
+    padding: 10px;
+    border-radius: 15px;
+    font-family: $font-family-sans-serif;
+    background: $gray-000;
+    border-radius: 15px;
+    -moz-border-radius: 10px;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    padding: 10px; /* Add more padding to the right to make space for the triangle */
+    font-weight: $headings-font-weight;
+    font-family: $headings-font-family;
+    color: #FFFFFF;
+    text-align: left;
+    background: $teal-900;
+    border-radius: 8px 10px 10px 8px;
+    -moz-border-radius: 0px;
+    vertical-align: middle;
+}
+
+h1 {
+    font-size: 30px !important;
+    vertical-align: none;
+    background: $teal-900;
+    color: $gray-000 !important;
+    padding-bottom: 0px;
+}
+
+h2 {
+    width: 75%;
+    color: $gray-000 !important;
+    height: 30px;
+
+    &::after {
+        border-radius: 0;
+        content: '';
+        position: absolute;
+        right: -26.5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: calc(48px * .65) solid $teal-900;
+        border-top: calc(48px / 2 - 2px) solid transparent;
+        border-bottom: calc(48px / 2 - 2px) solid transparent;
+    }
+}
+
+h2#toc-title {
+    height: auto;
+    padding: 5px;
+    padding-left: 10px;
+
+    &::after {
+        content: none;     /* Removes the ::after content, i.e., the triangle */
+    }
+}
+
+h3 {
+    width: 60%;
+    height: 100%;
+    color: $gray-000 !important;
+    font-size: 20px !important;
+
+    &::after {
+        border-radius: 0;
+        content: '';
+        position: absolute;
+        right: -28.5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: calc(48px * .65) solid $teal-900;
+        border-top: calc(48px / 2 - 2px) solid transparent;
+        border-bottom: calc(48px / 2 - 2px) solid transparent;
+    }
+}
+
+h4 {
+    position: relative;
+    padding-left: 62px; /* Space for block and triangle. Adjust as needed. */
+    background: none;
+    color: $teal-900;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size: 20px !important;
+
+    &::before {
+        /* Block */
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px; /* Adjust as needed */
+        height: 30px; /* Adjust as needed */
+        background: $teal-900;
+        border-radius: 5px 10px 10px 5px;
+    }
+
+    &::after {
+        /* Triangle */
+        content: '';
+        position: absolute;
+        left: 36px; /* Adjust based on block width */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: calc(30px * .60) solid $teal-900; /* Adjust based on the height */
+        border-top: calc(30px / 2 - 2px) solid transparent;
+        border-bottom: calc(30px / 2 - 2px) solid transparent;
+    }
+}
+
+h5, h6 {
+  display: inline-block;
+  font-size: 20px !important;
+  color: $gray-000 !important;
+  vertical-align: middle;
+}
+
+h6 {
+    background: #FFFFFF;
+    color: $teal-900;
+    border: 2px solid $teal-900;
+}
+
+.dataTables_wrapper {
+  // overflow: auto;
+  border: 4px solid $teal-900;
+  border-radius: 10px 10px 5px 5px;
+
+
+  .dataTable {
+
+    .last-row {
+      background-color: $teal-900;
+    }
+
+    overflow: hidden;
+
+    tbody tr:hover {
+      background-color: rgba(4, 45, 51, 0.1);
+    }
+
+    thead th:hover {
+      color: #FFF; /* This sets the text color to white; adjust as needed */
+      cursor: pointer; /* Makes it clear to users they can interact with the headers */
+    }
+
+    th, td {
+      font-family: "Poppins", sans-serif;
+      // font-weight: bold;
+      text-align: left;
+      // border-radius: 15px;
+    }
+
+    .th-hover-effect {
+      color: rgba(4, 45, 51, 0.05); /* teal-900 at 5% opacity */
+    }
+
+    td {
+      font-size: 15px;
+      padding-left: 15px;
+    }
+
+    th {
+      background-color: $teal-900;
+      color: #FFFFFF;
+      line-height: 1.2;
+      font-style: none;
+      font-variant: small-caps;
+      // border-radius: 15px;
+    }
+
+    // tr:nth-child(odd) {
+    //  background-color: $gray-100;
+    // }
+  }
+
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.grid-link {
+  text-decoration: none !important;
+  border: none;
+  background-color: $teal-900;
+  color: white;
+  border-radius: 15px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+
+  p {
+    position: relative;
+    font-weight: $headings-font-weight;
+    font-family: $headings-font-family;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 80px !important;
+    margin: 0;
+    padding: 5px;
+    line-height: 0;
+  }
+
+  span {
+    font-size: 20px !important;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.grid-item-empty {
+  background-color: $teal-900;
+  color: white;
+  border-radius: 15px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+
+}
+
+.grid-link.hovered {
+  background-color: $teal-700; /* Update to the lighter teal color when hovered */
+  p {
+    transform: scale(1.05); // Increase icon size on hover
+  }
+}
+
+.info.hovered {
+  border-style: solid;
+  border-color: $teal-700;
+  color: $teal-700;
+}
+
+.info {
+    border-style: solid;
+    border-width: 4px;
+    border-color: transparent;
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 10px;
+    border-radius: 8px 10px 10px 8px;
+    background: transparent; /* Make sure $teal-900 is defined in your CSS or replace it with a standard color code */
+    padding: 10px; /* Add padding for better visual appearance */
+    display: inline-block; /* This makes the background only wrap the text, not the entire line */
+
+}
+
+.info::after {
+    content: attr(data-description);
+    display: block;
+    margin-left: 10px;
+    font-size: 16px;
+    color: $teal-900;
+}
+
+.subtext {
+  color: #c4c4c4;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.rounded-outline {
+  display: inline-block; /* Makes the div inline */
+  /* width: 60px;  Set a fixed width */
+  font-size: 24px!important;
+  text-align: center; /* Center the text */
+  padding: 0px 5px; /* Some padding around the text */
+  font-weight: bold;
+}
+
+.dark-col {
+  background-color: $teal-900;
+}
+
+.dark-col h1 {
+  color: white;
+}
+
+.card-side {
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.cardbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-card-col {
+  width: 42%;
+  display: flex;
+  justify-content: center;
+}
+
+.right-card-col {
+  width: 58%;
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .cardbox {
+    flex-direction: column;
+  }
+
+  .left-card-col {
+    width: 100%;
+    display: flex;
+  }
+
+  .right-card-col {
+    width: 100%;
+  }
+}
+
+.mainboxbox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mainbox {
+  width: 100%;
+
+  @media (min-width: 768px) and (max-width: 1079px) {
+    width: calc(84% + (16% * (1080px - 100vw)) / (1080px - 768px));
+  }
+
+  @media (min-width: 1080px) {
+    width: 84%;
+  }
+}
+
+
+.mapscroll-container {
+  padding: 15px;
+  padding-bottom: 5px;
+  text-align: right;
+}
+
+.scroll-link {
+    cursor: pointer;
+    color: #9e9e9e; /* Semi light grey color */
+    background-color: transparent; /* No background */
+    text-decoration: none!important;
+    border: none; /* No border */
+}
+
+.scroll-link:hover {
+    color: #919191; /* Slightly darker grey on hover for visual feedback */
+}
+
+
+/*.info.show-description::after {
+    display: inline;
+}*/
+
+/*.info.collapsed::after {
+    content: '...';
+    display: inline;
+}*/
+
+/*.info.show-description.collapsed::after {
+    content: attr(data-description);
+}*/
+
+
+/*.info:hover::after {
+    content: attr(data-description);
+    margin-left: 10px;
+    font-size: 16px;
+    color: #DDD;
+    display: inline;
+}*/
+
+// Mermaid Theme;
+
+$mermaid-bg-color: $body-bg;
+$mermaid-edge-color: $teal-700;
+$mermaid-node-fg-color: $body-color;
+$mermaid-fg-color: $body-color;
+$mermaid-fg-color--lighter: lighten($body-color, 10%);
+$mermaid-fg-color--lightest: lighten($body-color, 20%);
+$mermaid-font-family: $font-family-sans-serif;
+$mermaid-label-bg-color: $body-bg;
+$mermaid-label-fg-color: $primary;
+$mermaid-node-bg-color: rgba($primary, 0.1);
+$mermaid-node-fg-color: $primary;

@@ -1,0 +1,8 @@
+---
+title: "Resume"
+---
+
+Some introductory text here.
+
+<iframe src="www/content/Michael Lopez - Resume - 2024.pdf" width="100%" height="1125px">
+</iframe>

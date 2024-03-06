@@ -1,0 +1,153 @@
+- title: "Homestead Exemptions in Dallas County"
+  description: "This mapping tool allows users to explore the uptake of homestead exemptions for homeowners across Dallas County, and view metrics related to home exemption uptake for eligbile households."
+  date: "2024-02-23"
+  categories: [Housing, Mapping Tool, Internal, Yearly, In Progress]
+  image: "/www/images/Housing_1 (Blue).jpg"
+  path: "https://cpal.shinyapps.io/homestead-exemptions-dallas/"
+
+- title: "Parcel Block Walking Neighborhoods"
+  description: "A lookup tool for neighborhoods across the City of Dallas where users can view residential parcels in different neighborhoods and lookup property owner information."
+  date: "2024-02-30"
+  categories: [Housing, Mapping Tool, Internal, Yearly, In Progress]
+  image: "/www/images/Housing_2 (Orange).jpg"
+  path: "https://cpal.shinyapps.io/parcel-block-walking/"
+
+- title: "Neighborhood Eviction Housing Profiles"
+  description: "A neighforhood fact sheet lookup tool that provides users with the ability to review idenfied housing and eviction metrics in neighborhoods across the City of Dallas."
+  date: "2024-02-09"
+  categories: [Housing, Fact Sheet, External, Yearly]
+  image: "/www/images/Safety_1 (Green).jpg"
+  path: "https://cpal.shinyapps.io/neighborhood-housing/"
+
+- title: "Exploring Teen Births in Dallas County Zip Codes"
+  description: "This mapping tool allows users to explore the areas with the highest proportions of teen births across zip codes in Dallas County."
+  date: "2024-01-26"
+  categories: [Maternal Health, Mapping Tool, Internal, Yearly]
+  image: "/www/images/Maternal_Reproductive Health_1 (pink).jpg"
+  path: "https://cpal.shinyapps.io/births-explore-dallas/"
+
+- title: "Minority Owned Businesses in Dallas County"
+  description: "A short-form fact sheet detailing the types of businesses owned by minority groups and their relative locations across Dallas County."
+  date: "2024-01-12"
+  categories: [Social Capital, Fact Sheet, External, Not Updated, Exclude]
+  image: "/www/images/Housing_1 (Blue).jpg"
+  path: "https://childpovertyactionlab.github.io/minority-businesses/"
+
+- title: "Street Maintenance Projects in the City of Dallas"
+  description: "A review of street maintenance projects being worked on in the City of Dallas across city council districts."
+  date: "2024-01-19"
+  categories: [Safety, Fact Sheet, External, Not Updated, Exclude]
+  image: "/www/images/Safety_1 (Green).jpg"
+  path: "https://childpovertyactionlab.github.io/street-maintenance/"
+
+- title: "Exploring Poverty in Dallas"
+  description: "This mapping tool allows users to explore the areas with the highest proportions of child poverty across the City of Dallas and pinpoint specific areas of the city with high need for relief."
+  date: "2024-01-12"
+  categories: [Organizational, Mapping Tool, Internal, Yearly]
+  image: "/www/images/Housing_2 (Green).jpg"
+  path: "https://cpal.shinyapps.io/poverty-explore-dallas/"
+
+- title: "CPAL Internal Metrics Dashboard"
+  description: "This shiny dashboard is an internal reference tool that can be used by CPAL team members to find organizational metrics aggregated from multiple data sources such as the American Community Survey and other administrative datasets across North Texas."
+  date: "2024-01-26"
+  categories: [Well-Resourced Neighborhoods, Dashboard, Internal, Yearly]
+  image: "/www/images/Housing_2 (Orange).jpg"
+  path: "https://cpal.shinyapps.io/internal-dashboard/"
+
+- title: "Children Affected by Poverty"
+  description: "This mapping tool allows users to define custom service areas based on administrative boundaries (census tracts or zctas) to calculate demograpgic and poverty related metrics within their custom service areas."
+  date: "2024-01-05"
+  categories: [Organizational, Mapping Tool, Internal, Yearly]
+  image: "/www/images/Housing_2 (Red).jpg"
+  path: "https://cpal.shinyapps.io/poverty-share-dallas/"
+
+- title: "Court Observers"
+  description: "Court Observers is an external fact sheet serving as a link repository for students participating in the Dallas County Court Observation project. It provides students with essential information about their roles and responsibilities, along with relevant project details."
+  date: "2024-01-05"
+  categories: [Housing, Fact Sheet, External, Not Updated]
+  image: "/www/images/Housing_3 (Red).jpg"
+  path: "https://childpovertyactionlab.github.io/court-observer/"
+
+- title: "WIC Uptake Tool"
+  description: "The WIC Uptake Tool is a dynamic dashboard designed for power users, offering monthly updates on WIC participation across Dallas County. It provides a deep dive into Local Agency 7 clinics, enabling targeted insights and actions."
+  date: "2023-12-01"
+  categories: [Early Development, Dashboard, External, Monthly, Exclude]
+  image: "/www/images/Benifits Delivery_1.jpg"
+  path: "https://cpal.shinyapps.io/wic-uptake-tool/"
+
+- title: "Justice40 in Dallas County"
+  description: "A mapping report visualizing a number of Justice40 initiative metrics for Dallas County."
+  date: "2023-12-15"
+  categories: [Organizational, Web Report, Internal, Yearly]
+  image: "/www/images/Safety_1 (Purple).jpg"
+  path: "https://childpovertyactionlab.github.io/justice40/"
+
+- title: "Neighborhood Safety Dashboard"
+  description: "A neighborhood centered dashboard using bcWorkshop neighborhoods where users can explore neighbohoods across the City of Dallas to learn about police incidents or 311 reports that have occurred."
+  date: "2023-12-08"
+  categories: [Safety, Dashboard, External, Monthly]
+  image: "/www/images/Safety_1 (red).jpg"
+  path: "https://cpal.shinyapps.io/neighborhood-safety/"
+
+- title: "CPAL Child Poverty Changes Report"
+  description: "A web report collating a number of city wide metrics important to organizational goals across all Child Poverty Action Lab domain areas. Currently focused on metrics related to Child Poverty."
+  date: "2023-12-01"
+  categories: [Organizational, Web Report, Internal, Yearly]
+  image: "/www/images/Housing_2 (Green).jpg"
+  path: "https://childpovertyactionlab.github.io/talking-points/"
+
+- title: "Community Displacement Tool"
+  description: "Analysis conducted with the aid of the Charles Schwab Community Development and Investment Team in order to assess where the areas of highest risk for displacement of residents in Dallas County may be when viewed through the lens of property level changes such as evictions, property value changes, ownership changes, and new building permits across time."
+  date: "2023-11-01"
+  categories: [Well-Resourced Neighborhoods, Dashboard, External, Not Updated]
+  image: "/www/images/Housing_2 (Red).jpg"
+  path: "https://cpal.shinyapps.io/community-displacement/"
+
+- title: "RAPID Survey Report"
+  description: "A web report that is intended to be updated quarterly in order to visualize new survey responses from households participating in the RAPID survey. The households participating in the survey are the same throughout the course of the project, responses are intended to show how households views on topics change over time throughout the City of Dallas."
+  date: "2023-10-01"
+  categories: [Early Development, Web Report, Internal, Quarterly]
+  image: "/www/images/Benifits Delivery_3.jpg"
+  path: "https://childpovertyactionlab.github.io/rapid-survey-report/"
+
+- title: "WIC Clinic Reports"
+  description: "A web report intended to aid WIC Clinics and WIC Clinic Managers in assessing needs and performance based on key metrics identified by Early Development Domain leads at the Child Poverty Action Lab."
+  date: "2023-10-01"
+  categories: [Early Development, Dashboard, Internal, Monthly, Exclude]
+  image: "/www/images/Benifits Delivery_2.jpg"
+  path: "https://childpovertyactionlab.github.io/wic-clinic-reports/"
+
+- title: "Dallas County Court Observation Report"
+  description: "A web report visualizing eviction court case proceedings observed across Dallas County through efforts led by the Child Poverty Action Lab and aided by the SMU School of Law."
+  date: "2023-12-01"
+  categories: [Housing, Dashboard, Internal, Yearly]
+  image: "/www/images/Housing_2 (Red).jpg"
+  path: "https://childpovertyactionlab.github.io/eviction-court-observations/"
+
+- title: "Dallas ISD Campus Housing Profiles"
+  description: "This is a tool generated to give Dallas ISD information related to middle of the year moves and evictions in attendance zones for all school campuses."
+  date: "2023-07-01"
+  categories: [Housing, Dashboard, External, Yearly]
+  image: "/www/images/Housing_3 (Green).jpg"
+  path: "https://cpal.shinyapps.io/disd-profiles/"
+
+- title: "North Texas Small-Area Fair Market Rent"
+  description: "Comparison of current Small-Area Fair Market rent from HUD against the average rents for apartment complexes in North Texas across various bedroom sizes."
+  date: "2022-10-01"
+  categories: [Housing, Mapping Tool, Internal, Yearly]
+  image: "/www/images/Housing_3 (Greenw_ Orange).jpg"
+  path: "https://childpovertyactionlab.github.io/safmr"
+
+- title: "Publicly Owned Land in Dallas County"
+  description: "Review of all publicly owned land in the City of Dallas by owner type. Intended use is to understand how much land owned by the City of Dallas is available for development."
+  date: "2023-08-01"
+  categories: [Housing, Mapping Tool, Internal, Yearly]
+  image: "/www/images/Housing_3 (Red).jpg"
+  path: "https://childpovertyactionlab.github.io/dmc-public-land/"
+
+- title: "Afterschool Landscape Tool"
+  description: "An analysis generated for Dallas Afterschool intended to aid them in understanding the current landscape of after school programming need relative to programs they currently offer."
+  date: "2023-06-01"
+  categories: [Well-Resourced Neighborhoods, Mapping Tool, External, Yearly]
+  image: "/www/images/Safety_1 (Purple).jpg"
+  path: "https://childpovertyactionlab.github.io/dallas-afterschool/"

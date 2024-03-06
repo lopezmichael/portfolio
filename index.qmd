@@ -1,0 +1,23 @@
+---
+title: "About Me"
+---
+
+::: {=html}
+<style>
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px auto; /* Center in the div */
+}
+.text-center {
+    text-align: center;
+}
+</style>
+:::
+
+<div class="text-center">
+    <img src="www/luffy.jpg" alt="Michael Lopez" class="profile-image">
+    <p>Michael Lopez is a dedicated data analyst with a rich background in public policy and a passionate advocate for social impact through data. Originating from Miami, where he laid the foundation of his career with dual bachelor's degrees in Psychology and Anthropology from Florida International University, Michael's journey led him to Dallas. Here, he furthered his education with a Master of Public Policy from the University of Texas at Dallas and cemented his role as a prominent figure in leveraging data to drive social change. Michael's career is marked by significant contributions to the Child Poverty Action Lab, where he has developed innovative tools and strategies to address complex social issues, showcasing his commitment to making a difference in the community.</p>
+    <p>In transitioning from Miami to Dallas, Michael has not only navigated geographical change but also embarked on a profound professional evolution. His journey reflects a deep-seated commitment to harnessing the power of data for the greater good, underscoring his ambition to continue working in the social sector. Through his work, Michael aspires to create lasting impact by translating data insights into actionable policies and programs that address and alleviate societal challenges. His portfolio is a testament to his skills, dedication, and the positive changes he's driven, positioning him as a valuable asset to any organization aiming to leverage data for social innovation and impact.</p>
+</div>
