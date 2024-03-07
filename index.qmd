@@ -2,22 +2,37 @@
 title: "About Me"
 ---
 
-::: {=html}
-<style>
-.profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 20px auto; /* Center in the div */
-}
-.text-center {
-    text-align: center;
-}
-</style>
-:::
-
-<div class="text-center">
-    <img src="www/luffy.jpg" alt="Michael Lopez" class="profile-image">
-    <p>Michael Lopez is a dedicated data analyst with a rich background in public policy and a passionate advocate for social impact through data. Originating from Miami, where he laid the foundation of his career with dual bachelor's degrees in Psychology and Anthropology from Florida International University, Michael's journey led him to Dallas. Here, he furthered his education with a Master of Public Policy from the University of Texas at Dallas and cemented his role as a prominent figure in leveraging data to drive social change. Michael's career is marked by significant contributions to the Child Poverty Action Lab, where he has developed innovative tools and strategies to address complex social issues, showcasing his commitment to making a difference in the community.</p>
-    <p>In transitioning from Miami to Dallas, Michael has not only navigated geographical change but also embarked on a profound professional evolution. His journey reflects a deep-seated commitment to harnessing the power of data for the greater good, underscoring his ambition to continue working in the social sector. Through his work, Michael aspires to create lasting impact by translating data insights into actionable policies and programs that address and alleviate societal challenges. His portfolio is a testament to his skills, dedication, and the positive changes he's driven, positioning him as a valuable asset to any organization aiming to leverage data for social innovation and impact.</p>
+```{=html}
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start;">
+    <div style="flex: 1 1 200px; min-width: 150px; margin-right: 20px;">
+        <img src="www/images/headshot.jpg" style="width: 100%; height: auto;">
+    </div>
+    <div style="flex: 3 1 70%;">
+        <p>
+            Hey there! I'm Michael Lopez, a Data Analyst with a foundation in both the non-profit sector and data analysis, with over four years of dedicated analysis experience alongside nearly a decade of  involvement in non-profit initiatives. A Miami native, I obtained my bachelor's degree at Florida International University, in Psychology and Anthropology. Before moving to Dallas, TX, where I to joined a research lab at the University of Texas at Dallas before subsequently enrolling in their Masters of Public Policy program.
+        </p>
+    </div>
 </div>
+```
+My time in Dallas has allowed me to partner with non-profit organizations dedicated to impactful place-based initiatives. My role at the Child Poverty Action Lab has allowed me to leverage data in transformative ways, enhancing program capabilities within Dallas County and the City of Dallas through actionable insights and meaningful conversations with stakeholders. Through my proficiency in R, alongside a strong ability to create engaging tools and reports with Shiny and Quarto. Additionally, my grasp of SQL and various other analytical tools complements my skill set. What truly sets me apart is my adaptability, curiosity, and ability to simplify complex data for a diverse audience. These attributes have been instrumental in not just meeting the dynamic needs of projects, but also in fostering a culture of innovation and collaboration within my teams.
+
+I dive into every project with an eye for analytical depth and imaginative solutions, motivated by a  commitment to contribute to social good through the power of data. I'm keen to continue exploring how my unique blend of skills, experience, and personal interests can drive meaningful change and create lasting impacts.
+
+# Portfolio
+
+Throughout this portfolio, you will find a collection of projects that were either created solely by myself or where I served as the lead analyst. The analyses were conducted primarily in R, leveraging a diverse range of data visualization and analysis techniques. The final products were generated using R Shiny or Quarto, ensuring a strong emphasis on reproducibility. Notably, projects labeled with the "External Developer" tag denote collaborations with external developers, where I spearheaded the data ETL (Extract, Transform, Load) processes and led the analysis efforts. These projects highlight my expertise in combining analytical skills with a keen focus on reproducible workflows to deliver impactful insights.
+
+---
+listing:
+    filter-ui: [categories, title]
+    contents: directory-content.yml
+    type: grid
+    sort: "date desc"
+    categories: numbered
+    date-format: medium
+    grid-columns: 3
+    image-height: "175px"
+    max-description-length: 250
+    exclude: 
+      categories: ["Exclude"]
+---

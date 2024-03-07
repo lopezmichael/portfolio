@@ -1,11 +1,12 @@
 project:
   type: website
   output-dir: "docs"
+  title: "Michael Lopez"
 format:
   html:
     theme: www/web_report.scss
     toc-title: Contents
-    toc: true
+    toc: false
     toc-depth: 2
     toc-location: right
     anchor-sections: false
@@ -15,7 +16,7 @@ format:
     smooth-scroll: true
     grid:
       sidebar-width: 250px
-      body-width: 900px
+      body-width: 850px
       margin-width: 300px
     code-block-bg: true
     code-block-border-left: "#008097"
@@ -27,31 +28,25 @@ format:
     echo: FALSE
     message: FALSE
 website:
-  search:
-    location: navbar
-    type: textbox
-  favicon: www/images/CPAL_favicon.ico
+  search: FALSE
+#    location: navbar
+#    type: textbox
+#  favicon: www/images/CPAL_favicon.ico
   navbar:
       pinned: TRUE
       search: FALSE
-      logo: www/images/CPAL_Logo_White.png
+#      logo: www/images/logo-square.png
 #      logo-href: "https://childpovertyactionlab.github.io/cpaldirectory/"
       collapse: FALSE
       right:
-        - text: "<b>Menu<b>"
-          menu:
-            - icon: house-door-fill
-              text: "Home"
-              href: index.html
-            - icon: card-list
-              text: "Directory"
-              href: directory.html
-            - icon: box-seam
-              text: "Resume"
-              href: resume.html
-            - icon: github
-              text: "Github"
-              href: "https://github.com/lopezmichael/"
+        - icon: house-door-fill
+          text: "Home"
+          href: index.html
+        - icon: card-list
+          text: "Resume"
+          href: resume.html
+        - icon: github
+          text: "Github"
+          href: "https://github.com/lopezmichael/"
   page-footer:
-    center: Copyright 2024 <b>[The Child Poverty Action Lab](https://childpovertyactionlab.org/).</b>
-    background: "#042D33"
+    background: "#1e1e1e"

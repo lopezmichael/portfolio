@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About Me</title>
+<title>Michael Lopez - About Me</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,12 +24,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./www/images/CPAL_favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -39,17 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -64,8 +50,66 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-description','listing-date','listing-categories','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-categories","listing-title"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -76,42 +120,29 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./www/images/CPAL_Logo_White.png" alt="" class="navbar-logo">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Michael Lopez</span>
     </a>
   </div>
           <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bmenub" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text"><b>Menu<b></b></b></span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bmenub">    
-        <li>
-    <a class="dropdown-item" href="./index.html"><i class="bi bi-house-door-fill" role="img">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> <i class="bi bi-house-door-fill" role="img">
 </i> 
- <span class="dropdown-text">Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./directory.html"><i class="bi bi-card-list" role="img">
+  <li class="nav-item">
+    <a class="nav-link" href="./resume.html"> <i class="bi bi-card-list" role="img">
 </i> 
- <span class="dropdown-text">Directory</span></a>
+<span class="menu-text">Resume</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./resume.html"><i class="bi bi-box-seam" role="img">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/lopezmichael/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="dropdown-text">Resume</span></a>
+<span class="menu-text">Github</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/lopezmichael/"><i class="bi bi-github" role="img">
-</i> 
- <span class="dropdown-text">Github</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
           <div class="quarto-navbar-tools">
 </div>
-            <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -120,8 +151,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Dashboard">Dashboard <span class="quarto-category-count">(3)</span></div><div class="category" data-category="External Developer">External Developer <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Fact Sheet">Fact Sheet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Housing">Housing <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Mapping Tool">Mapping Tool <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Maternal Health">Maternal Health <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Organizational">Organizational <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R Shiny">R Shiny <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Safety">Safety <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Web Report">Web Report <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Well-Resourced Neighborhoods">Well-Resourced Neighborhoods <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -144,28 +174,435 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="{=html}">
-<style>
-.profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 20px auto; /* Center in the div */
-}
-.text-center {
-    text-align: center;
-}
-</style>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start;">
+    <div style="flex: 1 1 200px; min-width: 150px; margin-right: 20px;">
+        <img src="www/images/headshot.jpg" style="width: 100%; height: auto;">
+    </div>
+    <div style="flex: 3 1 70%;">
+        <p>
+            Hey there! I'm Michael Lopez, a Data Analyst with a foundation in both the non-profit sector and data analysis, with over four years of dedicated analysis experience alongside nearly a decade of  involvement in non-profit initiatives. A Miami native, I obtained my bachelor's degree at Florida International University, in Psychology and Anthropology. Before moving to Dallas, TX, where I to joined a research lab at the University of Texas at Dallas before subsequently enrolling in their Masters of Public Policy program.
+        </p>
+    </div>
 </div>
-<div class="text-center">
-<pre><code>&lt;img src="www/luffy.jpg" alt="Michael Lopez" class="profile-image"&gt;
-&lt;p&gt;Michael Lopez is a dedicated data analyst with a rich background in public policy and a passionate advocate for social impact through data. Originating from Miami, where he laid the foundation of his career with dual bachelor's degrees in Psychology and Anthropology from Florida International University, Michael's journey led him to Dallas. Here, he furthered his education with a Master of Public Policy from the University of Texas at Dallas and cemented his role as a prominent figure in leveraging data to drive social change. Michael's career is marked by significant contributions to the Child Poverty Action Lab, where he has developed innovative tools and strategies to address complex social issues, showcasing his commitment to making a difference in the community.&lt;/p&gt;
-&lt;p&gt;In transitioning from Miami to Dallas, Michael has not only navigated geographical change but also embarked on a profound professional evolution. His journey reflects a deep-seated commitment to harnessing the power of data for the greater good, underscoring his ambition to continue working in the social sector. Through his work, Michael aspires to create lasting impact by translating data insights into actionable policies and programs that address and alleviate societal challenges. His portfolio is a testament to his skills, dedication, and the positive changes he's driven, positioning him as a valuable asset to any organization aiming to leverage data for social innovation and impact.&lt;/p&gt;</code></pre>
-</div>
-<b><b>
+<p>My time in Dallas has allowed me to partner with non-profit organizations dedicated to impactful place-based initiatives. My role at the Child Poverty Action Lab has allowed me to leverage data in transformative ways, enhancing program capabilities within Dallas County and the City of Dallas through actionable insights and meaningful conversations with stakeholders. Through my proficiency in R, alongside a strong ability to create engaging tools and reports with Shiny and Quarto. Additionally, my grasp of SQL and various other analytical tools complements my skill set. What truly sets me apart is my adaptability, curiosity, and ability to simplify complex data for a diverse audience. These attributes have been instrumental in not just meeting the dynamic needs of projects, but also in fostering a culture of innovation and collaboration within my teams.</p>
+<p>I dive into every project with an eye for analytical depth and imaginative solutions, motivated by a commitment to contribute to social good through the power of data. I’m keen to continue exploring how my unique blend of skills, experience, and personal interests can drive meaningful change and create lasting impacts.</p>
+<section id="portfolio" class="level1">
+<h1>Portfolio</h1>
+<p>Throughout this portfolio, you will find a collection of projects that were either created solely by myself or where I served as the lead analyst. The analyses were conducted primarily in R, leveraging a diverse range of data visualization and analysis techniques. The final products were generated using R Shiny or Quarto, ensuring a strong emphasis on reproducibility. Notably, projects labeled with the “External Developer” tag denote collaborations with external developers, where I spearheaded the data ETL (Extract, Transform, Load) processes and led the analysis efforts. These projects highlight my expertise in combining analytical skills with a keen focus on reproducible workflows to deliver impactful insights.</p>
 
 
-</b></b></main><b><b> <!-- /main -->
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="listing-actions-group">
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Housing,Mapping Tool,R Shiny" data-listing-date-sort="1708668000000">
+<a href="https://cpal.shinyapps.io/homestead-exemptions-dallas/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/homestead-exemptions.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Homestead Exemptions in Dallas County
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Housing'); return false;">
+Housing
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+This mapping tool allows users to explore the uptake of homestead exemptions for homeowners across Dallas County, and view metrics related to home exemption uptake for eligbile households.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Feb 23, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Housing,Fact Sheet,R Shiny" data-listing-date-sort="1707458400000">
+<a href="https://cpal.shinyapps.io/neighborhood-housing/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/neighborhood-housing.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Neighborhood Eviction Housing Profiles
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Housing'); return false;">
+Housing
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Fact Sheet'); return false;">
+Fact Sheet
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+A neighborhood fact sheet lookup tool that provides users with the ability to review idenfied housing and eviction metrics in neighborhoods across the City of Dallas.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Feb 9, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="Maternal Health,Mapping Tool,External Developer" data-listing-date-sort="1706248800000">
+<a href="https://trustherclinicfinder.org/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/clinicfinder.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Trust Her Clinic finder
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Maternal Health'); return false;">
+Maternal Health
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('External Developer'); return false;">
+External Developer
+</div>
+</div>
+<div class="card-text listing-description">
+This mapping tool allows users to explore the areas with the highest proportions of teen births across zip codes in Dallas County.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jan 26, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-categories="Maternal Health,Mapping Tool,R Shiny" data-listing-date-sort="1706248800000">
+<a href="https://cpal.shinyapps.io/births-explore-dallas/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/births-explore.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Exploring Teen Births in Dallas County Zip Codes
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Maternal Health'); return false;">
+Maternal Health
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+This mapping tool allows users to explore the areas with the highest proportions of teen births across zip codes in Dallas County.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jan 26, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="4" data-categories="Organizational,Mapping Tool,R Shiny" data-listing-date-sort="1705039200000">
+<a href="https://cpal.shinyapps.io/poverty-explore-dallas/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/poverty-explore.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Exploring Poverty in Dallas
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Organizational'); return false;">
+Organizational
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+This mapping tool allows users to explore the areas with the highest proportions of child poverty across the City of Dallas and pinpoint specific areas of the city with high need for relief.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jan 12, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="5" data-categories="Organizational,Mapping Tool,R Shiny" data-listing-date-sort="1704434400000">
+<a href="https://cpal.shinyapps.io/poverty-share-dallas/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/poverty-share.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Children Affected by Poverty
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Organizational'); return false;">
+Organizational
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+This mapping tool allows users to define custom service areas based on administrative boundaries (census tracts or zctas) to calculate demograpgic and poverty related metrics within their custom service areas.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jan 5, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="6" data-categories="Safety,Dashboard,R Shiny" data-listing-date-sort="1702015200000">
+<a href="https://cpal.shinyapps.io/neighborhood-safety/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/neighborhood-safety.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Neighborhood Safety Dashboard
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Safety'); return false;">
+Safety
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Dashboard'); return false;">
+Dashboard
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+A neighborhood centered dashboard using bcWorkshop neighborhoods where users can explore neighbohoods across the City of Dallas to learn about police incidents or 311 reports that have occurred.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 8, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="7" data-categories="Organizational,Web Report,Quarto" data-listing-date-sort="1701410400000">
+<a href="https://childpovertyactionlab.github.io/talking-points/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/childpoverty-report.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+CPAL Child Poverty Changes Report
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Organizational'); return false;">
+Organizational
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Web Report'); return false;">
+Web Report
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Quarto'); return false;">
+Quarto
+</div>
+</div>
+<div class="card-text listing-description">
+A web report collating a number of city wide metrics important to organizational goals across all Child Poverty Action Lab domain areas. Currently focused on metrics related to Child Poverty.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 1, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="8" data-categories="Housing,Dashboard,Quarto" data-listing-date-sort="1701410400000">
+<a href="https://childpovertyactionlab.github.io/eviction-court-observations/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/courtobservation-report.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Dallas County Court Observation Report
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Housing'); return false;">
+Housing
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Dashboard'); return false;">
+Dashboard
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Quarto'); return false;">
+Quarto
+</div>
+</div>
+<div class="card-text listing-description">
+A web report visualizing eviction court case proceedings observed across Dallas County through efforts led by the Child Poverty Action Lab and aided by the SMU School of Law.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 1, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="9" data-categories="Well-Resourced Neighborhoods,Dashboard,R Shiny" data-listing-date-sort="1698814800000">
+<a href="https://cpal.shinyapps.io/community-displacement/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/community-displacement.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Community Displacement Tool
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Well-Resourced Neighborhoods'); return false;">
+Well-Resourced Neighborhoods
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Dashboard'); return false;">
+Dashboard
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R Shiny'); return false;">
+R Shiny
+</div>
+</div>
+<div class="card-text listing-description">
+Analysis conducted with the aid of the Charles Schwab Community Development and Investment Team in order to assess where the areas of highest risk for displacement of residents in Dallas County may be when viewed through the lens of property level…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Nov 1, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="10" data-categories="Housing,Mapping Tool,External Developer" data-listing-date-sort="1641016800000">
+<a href="https://northtexasevictions.org/#/map/counties/efr/mhi/2020-01-01/2024-03-04/8/32.74/-96.96?group=monthly" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/ntep.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+North Texas Eviction Project
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Housing'); return false;">
+Housing
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('External Developer'); return false;">
+External Developer
+</div>
+</div>
+<div class="card-text listing-description">
+A neighforhood fact sheet lookup tool that provides users with the ability to review idenfied housing and eviction metrics in neighborhoods across the City of Dallas.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jan 1, 2022
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="11" data-categories="Housing,Mapping Tool,External Developer" data-listing-date-sort="1609480800000">
+<a href="https://dallasisd.resourceexplorer.org/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./www/images/communityresourceexplorer.png" class="thumbnail-image card-img" style="height: 175px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Community Resource Explorer
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Housing'); return false;">
+Housing
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Mapping Tool'); return false;">
+Mapping Tool
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('External Developer'); return false;">
+External Developer
+</div>
+</div>
+<div class="card-text listing-description">
+The Community Resource Explorer is a data tool exploring asset allocation across Dallas ISD campuses for individuals and institutions to explore where they can have the greatest impact.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jan 1, 2021
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -238,6 +675,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -272,7 +727,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -546,23 +1005,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-</b></b></div><b><b> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">
-<p>Copyright 2024 <b><a href="https://childpovertyactionlab.org/">The Child Poverty Action Lab</a>.</b></p>
-</div>
-    <div class="nav-footer-right">
-      &nbsp;
-    </div>
-  </div>
-</footer>
+</div> <!-- /content -->
 
 
 
 
-</b></b><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
