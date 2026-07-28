@@ -3,6 +3,17 @@
 // Run: `npm run resume:pdf` (needs `npx playwright install chromium`).
 // NOTE: the data below MIRRORS src/data/resume.ts. It is NOT auto-synced —
 // if you edit resume.ts, update the arrays here and re-run this script.
+//
+// PAGE BUDGET (measured 2026-07-27) — this resume must stay 2 pages.
+// "Earlier Leadership & Policy Experience" forces a break, so:
+//   page 1 = header + summary + all CPAL experience  → 950px used of 965px (15px headroom)
+//   page 2 = earlier roles + skills + education + projects + media → 770px of 965px
+// Page 1 has room for roughly ONE more line. Adding a bullet there will push the
+// resume to 3 pages. If you add one, cut one. The print version is deliberately
+// leaner than src/data/resume.ts (the web version has no page constraint), so
+// prefer dropping bullets already covered in Selected Projects.
+// To re-measure: copy this file, replace the page.pdf() call with a
+// getBoundingClientRect() probe on h2.page-break at viewport width (8.5-1.2)*96.
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,27 +33,29 @@ const experience = [
   { title: 'Director, Data Operations', dates: 'Jan 2026 – Present', bullets: [
     "Lead CPAL's data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35–40 pipelines from file-based storage onto unified cloud infrastructure",
     'Manage a 6-person external data engineering team via vendor partnership executing the internal data roadmap, alongside one full-time data engineer reporting directly to me',
-    'Built AI-enabled team workflows (Claude Code with custom skills and agents, prompt caching with the Anthropic API), accelerating how we develop pipelines, write documentation, review code, and communicate with stakeholders',
-    'Develop internal tools that let non-data staff act on data without analyst intervention, including a parcel-level outreach tool with 20 active field-team users',
-    'Maintain the eviction data workstream across four North Texas counties (~48,000 filings in Dallas County alone in 2025); daily feed to 12+ partners including the Dallas Eviction Advocacy Center, the Princeton Eviction Lab, and Dallas Health & Human Services',
+    'Built AI-enabled team workflows (Claude Code with custom skills and agents, prompt caching with the Anthropic API), including multi-agent code review with independent verification, accelerating how we develop pipelines, write documentation, review code, and communicate with stakeholders',
+    // Parcel-outreach bullet intentionally dropped from the print resume: it is
+    // already covered in Selected Projects and page 1 is height-constrained.
+    'Maintain the eviction data workstream across four North Texas counties (~48,000 Dallas filings in 2025), feeding 12+ partners daily including the Dallas Eviction Advocacy Center and the Princeton Eviction Lab',
   ]},
   { title: 'Director, Data', dates: 'May 2023 – Dec 2025', bullets: [
     "Built CPAL's data function from the ground up; led hiring for the org's first data engineer and prior analyst roles",
     'Led the data org through the CDO transition (Dec 2024 to Dec 2025): set department roadmap, hiring, vendor strategy, and budget, reporting directly to the CTO',
+    "Directed CPAL's citywide risk terrain modeling through 2024; division-level findings informed Office of Integrated Public Safety Solutions deployment and drove blight-remediation site selection and neighborhood amenity construction",
+    "Modeled Dallas's rental supply gap for CPAL's annual Rental Housing Needs Assessment (2023–2024): a 33,660-unit shortfall at or below 50% AMI, projected to 83,500 by 2030",
     'Oversaw a 30+ app R Shiny suite informing decisions across housing, public safety, maternal health, benefits delivery, and criminal justice',
-    'Evaluated and selected the enterprise tooling stack: Databricks (chosen over Snowflake / dbt-Cloud after a capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
-    'Built project-management infrastructure in Notion now adopted across multiple CPAL departments',
+    'Evaluated and selected the enterprise tooling stack: Databricks (over Snowflake / dbt-Cloud after a capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
   ]},
   { title: 'Manager, Data', dates: 'May 2022 – May 2023', bullets: [
+    "Ran CPAL's citywide risk terrain modeling on Dallas PD incident data joined to Data Axle property and business records (SIMSI), producing division-level environmental risk surfaces to target place-based violence prevention",
     'Led development of R Shiny applications, shifting the organization toward interactive data products',
-    'Contributed to northtexasevictions.org, a public-facing eviction data transparency tool',
+    // northtexasevictions.org bullet dropped here — already in Selected Projects.
     'Mentored analytics interns; one was subsequently hired as a full-time analyst',
-    'Established data collection and sharing procedures that became organizational standards',
   ]},
   { title: 'Associate, Data', dates: 'Jun 2020 – Apr 2022', bullets: [
     'Created the initial eviction data pipeline in R, laying the groundwork for the system now serving four counties',
+    'Built the Community Resource Explorer, indexing community-resource access within two miles of every Dallas school campus to find the least-resourced neighborhoods; helped define disbursement of a $1.25B bond package',
     'Developed dashboards and reports in R, QGIS, Tableau, and ArcGIS for internal teams and community partners',
-    'Automated routine data processes, establishing repeatable frameworks used across the organization',
   ]},
 ];
 
@@ -52,7 +65,7 @@ const earlier = [
 ];
 
 const education = [
-  { degree: 'Master of Public Policy', school: 'University of Texas at Dallas', year: '2021' },
+  { degree: 'Master of Public Policy', school: 'University of Texas at Dallas' },
   { degree: 'B.A., Psychology & Anthropology', school: 'Florida International University', year: '2015' },
 ];
 
@@ -62,13 +75,18 @@ const skills = [
   { label: 'Data Platform', items: ['Databricks (Lakehouse + Unity Catalog)', 'PostgreSQL / Neon', 'DuckDB', 'Polars', 'PostGIS', 'CKAN'] },
   { label: 'AI Workflows', items: ['Claude Code (custom skills & agents)', 'Anthropic API', 'Google Cloud Vision (OCR)'] },
   { label: 'Orchestration & Infra', items: ['Terraform', 'GitHub Actions', 'Docker', 'AWS', 'Vercel', 'Prefect', 'Structured logging'] },
-  { label: 'Domains', items: ['Housing & Eviction', 'Public Safety', 'Maternal Health', 'Benefits Delivery', 'Community Development'] },
+  { label: 'Methods', items: ['Risk Terrain Modeling', 'Index Construction & PCA', 'Spatial Analysis', 'Needs Assessment & Supply Modeling'] },
+  { label: 'Domains', items: ['Housing & Eviction', 'Public Safety', 'Criminal Justice', 'Maternal Health', 'Benefits Delivery', 'Community Development'] },
 ];
 
 const projects = [
   { name: 'Dallas County Eviction Data', desc: 'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; ~48,000 Dallas filings a year turned into tenant outreach.' },
   { name: 'DigiLab', desc: 'Community-sourced tournament data platform for the global Digimon TCG scene; 5,000+ tournaments logged in six months, with regional meta analysis players use to prep.', tag: 'digilab.cards' },
   { name: 'Parcel Block Walking Tool', desc: 'Field-outreach tool flagging homes likely missing a homestead exemption; ~20 active field-team users across outreach partners.' },
+  // NOTE: Rental Housing Needs Assessment and Community Resource Explorer are
+  // intentionally NOT listed here — both already appear as experience bullets,
+  // and the print resume is page-constrained. They ARE listed in src/data/resume.ts
+  // for the web version, which has no such constraint.
   { name: 'North Texas Evictions', desc: 'Public-facing eviction data transparency dashboard for Dallas County.', tag: 'northtexasevictions.org' },
 ];
 
@@ -103,7 +121,7 @@ const skillsHtml = skills.map((c) => `
     <div class="chips">${c.items.map((i) => `<span class="chip">${esc(i)}</span>`).join('')}</div>
   </div>`).join('');
 
-const eduHtml = education.map((e) => `<div class="edu-row"><span><strong>${esc(e.degree)}</strong>, ${esc(e.school)}</span><span class="dates">${esc(e.year)}</span></div>`).join('');
+const eduHtml = education.map((e) => `<div class="edu-row"><span><strong>${esc(e.degree)}</strong>, ${esc(e.school)}</span>${e.year ? `<span class="dates">${esc(e.year)}</span>` : ''}</div>`).join('');
 
 const projHtml = projects.map((p) => `<li><span class="p-name">${esc(p.name)}${p.tag ? ` <span class="p-tag">${esc(p.tag)}</span>` : ''}.</span> ${esc(p.desc)}</li>`).join('');
 

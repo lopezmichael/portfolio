@@ -9,7 +9,8 @@ export interface Experience {
 export interface Education {
   degree: string;
   school: string;
-  year: string;
+  /** Optional. Omit to display a degree without a date. */
+  year?: string;
 }
 
 export interface SkillCategory {
@@ -42,7 +43,7 @@ export const experience: Experience[] = [
     bullets: [
       'Leading CPAL\'s data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35-40 pipelines from file-based storage onto unified cloud infrastructure',
       'Manage a 6-person external data engineering team via vendor partnership executing on the internal data roadmap, alongside one full-time data engineer reporting directly to me',
-      'Built AI-enabled team workflows (Claude Code with custom skills and agents, prompt caching with the Anthropic API), meaningfully accelerating how we develop pipelines, write documentation, review code, and communicate with stakeholders',
+      'Built AI-enabled team workflows (Claude Code with custom skills and agents, prompt caching with the Anthropic API), including multi-agent code review that puts findings through independent verification before release, meaningfully accelerating how we develop pipelines, write documentation, review code, and communicate with stakeholders',
       'Develop internal tools that let non-data staff act on data without analyst intervention, including a parcel-level outreach tool with 20 active field-team users',
       'Maintain the eviction data workstream across four North Texas counties (~48,000 filings in Dallas County alone in 2025; daily updates to 12+ partners including the Dallas Eviction Advocacy Center, the Princeton Eviction Lab, and Dallas Health & Human Services), now running on Databricks Python notebooks after migration from the original R implementation',
     ],
@@ -56,6 +57,8 @@ export const experience: Experience[] = [
     bullets: [
       'Built CPAL\'s data function from the ground up; led hiring for the org\'s first data engineer and prior analyst roles',
       'Led the data org during CDO transition (Dec 2024 - Dec 2025): set department roadmap, hiring, vendor strategy, and budget; reported directly to the CTO',
+      'Directed CPAL\'s citywide risk terrain modeling program through 2024; division-level findings informed Office of Integrated Public Safety Solutions resource deployment and drove site selection for blight remediation and the neighborhood amenities that followed, including basketball courts, soccer fields, and parks',
+      'Modeled Dallas\'s rental housing supply gap for CPAL\'s annual Rental Housing Needs Assessment (2023 and 2024 editions), quantifying a 33,660-unit shortfall for households at or below 50% AMI and projecting growth to 83,500 units by 2030',
       'Oversaw development of an internal Shiny app suite (30+ apps) informing decisions across CPAL focus areas: housing, public safety, maternal health, benefits delivery, and criminal justice',
       'Evaluated and selected the org\'s enterprise tooling stack: Databricks (chosen over Snowflake/dbt-Cloud after capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
       'Built project management infrastructure in Notion now adopted across multiple CPAL departments',
@@ -68,6 +71,7 @@ export const experience: Experience[] = [
     summary:
       'Transitioned from individual contributor to project leadership, managing cross-functional data initiatives and mentoring junior team members.',
     bullets: [
+      'Ran CPAL\'s citywide risk terrain modeling on Dallas Police Department incident data joined to Data Axle property and business records (SIMSI platform), producing division-level environmental risk surfaces used to target place-based violence prevention',
       'Led development of R Shiny applications, shifting organization toward interactive data products',
       'Contributed to development of northtexasevictions.org, a public-facing eviction data transparency tool',
       'Mentored analytics interns; one intern subsequently hired as full-time analyst',
@@ -83,6 +87,7 @@ export const experience: Experience[] = [
       'Early analytics team member who built foundational data infrastructure and reporting systems.',
     bullets: [
       'Created initial eviction data pipeline in R, laying groundwork for system now processing 40K+ records annually',
+      'Built the Community Resource Explorer, an index measuring access to community resources (clinics, grocery stores, parks) within a two-mile band of every Dallas school campus to identify the least-resourced school neighborhoods; the analysis helped define disbursement of a $1.25B bond package',
       'Developed dashboards and reports in R, QGIS, Tableau, and ArcGIS for internal teams and community partners',
       'Automated routine data processes, establishing repeatable frameworks used across the organization',
       'Presented findings on housing instability, afterschool programming, and public safety to partner organizations',
@@ -138,7 +143,6 @@ export const education: Education[] = [
   {
     degree: 'Master of Public Policy',
     school: 'University of Texas at Dallas',
-    year: '2021',
   },
   {
     degree: 'Bachelor of Arts, Psychology & Anthropology',
@@ -157,8 +161,12 @@ export const skills: SkillCategory[] = [
     items: ['R Shiny', 'Tableau', 'Highcharts', 'Mapbox GL', 'Spatial SQL', 'QGIS', 'ArcGIS'],
   },
   {
+    label: 'Methods',
+    items: ['Risk Terrain Modeling', 'Index Construction & PCA', 'Spatial Analysis', 'Needs Assessment & Supply Modeling'],
+  },
+  {
     label: 'Domains',
-    items: ['Housing & Eviction', 'Public Safety', 'Maternal Health', 'Benefits Delivery', 'Community Development'],
+    items: ['Housing & Eviction', 'Public Safety', 'Criminal Justice', 'Maternal Health', 'Benefits Delivery', 'Community Development'],
   },
   {
     label: 'Data Platform',
@@ -220,6 +228,17 @@ export const selectedProjects: SelectedProject[] = [
     name: 'Parcel Block Walking Tool',
     description:
       'Housing assistance eligibility identifier with 20 active users',
+  },
+  {
+    name: 'Rental Housing Needs Assessment',
+    description:
+      'Annual public report modeling Dallas\'s rental supply gap; 33,660-unit shortfall at or below 50% AMI, projected to 83,500 by 2030',
+    href: 'https://childpovertyactionlab.imgix.net/CPAL-Rental-Housing-Needs-Assessment-2024.pdf',
+  },
+  {
+    name: 'Community Resource Explorer',
+    description:
+      'Index of community-resource access around every Dallas school campus; helped define disbursement of a $1.25B bond package',
   },
   {
     name: '30+ R Shiny Dashboards',

@@ -188,8 +188,10 @@ const hasResumePdf = true;
               <div class="space-y-5">
                 {education.map((edu) => (
                   <div>
-                    <p class="text-[11px] uppercase tracking-[0.14em] text-canyon font-semibold">{edu.year}</p>
-                    <h4 class="text-base font-semibold mt-1">{edu.degree}</h4>
+                    {edu.year && (
+                      <p class="text-[11px] uppercase tracking-[0.14em] text-canyon font-semibold">{edu.year}</p>
+                    )}
+                    <h4 class={`text-base font-semibold${edu.year ? ' mt-1' : ''}`}>{edu.degree}</h4>
                     <p class="flex items-center gap-2 text-sm text-cool dark:text-secondary mt-1">
                       <span class="w-1.5 h-1.5 rounded-full bg-canyon shrink-0" aria-hidden="true"></span>
                       {edu.school}
