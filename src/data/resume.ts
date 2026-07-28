@@ -268,8 +268,11 @@ export const experience: Experience[] = [
     group: 'cpal',
     bullets: [
       {
-        text: 'Created initial eviction data pipeline in R, laying groundwork for system now processing 40K+ records annually',
-        print: 'Created the initial eviction data pipeline in R, laying the groundwork for the system now serving four counties',
+        // Web said "40K+ records annually" while print said "serving four
+        // counties". The 40K figure was stale against the ~48,000 Dallas filings
+        // cited elsewhere, so both forms now make the same claim.
+        text: 'Created initial eviction data pipeline in R, laying groundwork for the system now serving four North Texas counties',
+        print: 'Created the initial eviction data pipeline in R, laying the groundwork for the system now serving four North Texas counties',
       },
       {
         text: 'Built the Community Resource Explorer, an index measuring access to community resources (clinics, grocery stores, parks) within a two-mile band of every Dallas school campus to identify the least-resourced school neighborhoods; the analysis helped define disbursement of a $1.25B bond package',
@@ -460,25 +463,38 @@ export const selectedMedia: MediaItem[] = [
 export const selectedProjects: SelectedProject[] = [
   {
     name: 'Dallas County Eviction Data',
+    // Was "40,000+ filings a year" on web vs "~48,000" in print: the same claim
+    // with a 20% gap between the site and the attached PDF. ~48,000 matches the
+    // experience bullet and is the current figure.
     description:
-      'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; 40,000+ filings a year turned into tenant outreach',
+      'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; ~48,000 Dallas filings a year turned into tenant outreach',
     print:
       'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; ~48,000 Dallas filings a year turned into tenant outreach.',
   },
   {
     name: 'North Texas Evictions',
-    description: 'Public-facing data transparency tool',
-    print: 'Public-facing eviction data transparency dashboard for Dallas County.',
+    // Print used to scope a site called *North* Texas Evictions to "Dallas
+    // County", contradicting the four-counties bullet three lines away.
+    description: 'Public-facing eviction data transparency dashboard for North Texas',
+    print: 'Public-facing eviction data transparency dashboard for North Texas.',
     href: 'https://northtexasevictions.org',
     tag: 'northtexasevictions.org',
-    variants: ['playercoach', 'platform'],
+    // NOT in `platform`: that variant carries the "Contributed to
+    // northtexasevictions.org" experience bullet, and listing both put the same
+    // item on both pages of the platform PDF.
+    variants: ['playercoach'],
   },
   {
     name: 'Parcel Block Walking Tool',
+    // Both forms now name the SAME program. Web previously said "housing
+    // assistance eligibility identifier", which described a different thing than
+    // the print copy. Homestead exemption is correct per Proof Points.
     description:
-      'Housing assistance eligibility identifier with 20 active users',
+      'Field-outreach tool flagging homes likely missing a homestead exemption; ~20 active field-team users',
     print:
       'Field-outreach tool flagging homes likely missing a homestead exemption; ~20 active field-team users across outreach partners.',
+    // NOT in `platform`: that variant carries the parcel-tool experience bullet.
+    variants: ['playercoach', 'research'],
   },
   {
     name: 'Rental Housing Needs Assessment',

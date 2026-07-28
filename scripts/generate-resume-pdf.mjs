@@ -45,19 +45,34 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 // --- variant selection ---
 const argv = process.argv.slice(2);
-const arg = (name) => {
-  const hit = argv.find((a) => a.startsWith(`--${name}=`));
-  return hit ? hit.split('=')[1] : undefined;
-};
 const MEASURE = argv.includes('--measure');
 if (argv.includes('--list')) {
   for (const v of VARIANTS) console.log(`${v.padEnd(12)} ${variantMeta[v].label}`);
   process.exit(0);
 }
-const requested = arg('variant');
-if (requested && !VARIANTS.includes(requested)) {
-  console.error(`Unknown variant "${requested}". Known: ${VARIANTS.join(', ')}`);
-  process.exit(1);
+
+// Parse --variant strictly. A bare `--variant`, an empty `--variant=`, or a
+// space-separated `--variant platform` used to fall through to "regenerate
+// everything", which silently rewrote the default resume that /resume links to
+// when the caller meant to touch exactly one file.
+const die = (msg) => { console.error(msg); process.exit(1); };
+let requested;
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  if (a === '--measure' || a === '--list') continue;
+  if (a === '--variant') {
+    die(`"--variant" needs a value: --variant=<${VARIANTS.join('|')}>` +
+        (argv[i + 1] && !argv[i + 1].startsWith('--') ? ` (did you mean --variant=${argv[i + 1]}?)` : ''));
+  }
+  if (a.startsWith('--variant=')) {
+    const value = a.slice('--variant='.length);
+    if (!VARIANTS.includes(value)) {
+      die(`Unknown variant ${JSON.stringify(value)}. Known: ${VARIANTS.join(', ')}`);
+    }
+    requested = value;
+    continue;
+  }
+  die(`Unrecognized argument ${JSON.stringify(a)}. Usage: [--variant=<name>] [--measure] [--list]`);
 }
 const targets = requested ? [requested] : VARIANTS;
 
@@ -83,10 +98,20 @@ const experienceFor = (variant) =>
 
 const skillsFor = (variant) => {
   const order = skillOrder[variant] ?? skills.map((s) => s.label);
-  return order
-    .map((label) => skills.find((s) => s.label === label))
-    .filter(Boolean)
-    .filter((s) => !s.variants || s.variants.includes(variant));
+  return order.map((label) => {
+    const row = skills.find((s) => s.label === label);
+    // skillOrder joins on hand-typed label strings. Silently dropping an
+    // unresolved one deletes a whole skills row from the PDF, and the page
+    // budget then passes MORE easily because the page got shorter — the
+    // guardrail would confirm the bug. Fail loudly instead.
+    if (!row) {
+      throw new Error(
+        `skillOrder.${variant} names "${label}", which is not a label in \`skills\`. ` +
+        `Known labels: ${skills.map((s) => s.label).join(', ')}`
+      );
+    }
+    return row;
+  }).filter((s) => !s.variants || s.variants.includes(variant));
 };
 
 const projectsFor = (variant) =>
@@ -233,6 +258,15 @@ const AVAIL = (11 - 0.5 - 0.45) * 96; // Letter height minus vertical margins
 const PRINT_W = Math.round((8.5 - 1.2) * 96); // Letter width minus horizontal margins
 
 const browser = await chromium.launch();
+const fmt = (used, over) =>
+  `${Math.round(used)}/${Math.round(AVAIL)}px ` +
+  (over > 0 ? `OVERFLOW +${Math.round(over)}px` : `(${Math.round(-over)}px headroom)`);
+
+// PASS 1 — measure every requested variant before writing ANY of them.
+// Writing as we go left a mixed state on failure: an overflowing default would
+// stay stale on disk while the other two refreshed, and all three are tracked
+// in git, so the stale one ships.
+const measured = [];
 let failed = false;
 
 for (const variant of targets) {
@@ -243,7 +277,6 @@ for (const variant of targets) {
   await page.emulateMedia({ media: 'print' });
   await page.evaluate(async () => { await document.fonts.ready; });
 
-  // Measure the two forced-break sections before committing to a PDF.
   const fill = await page.evaluate(() => {
     const brk = document.querySelector('h2.page-break');
     const p1 = brk.getBoundingClientRect().top + window.scrollY;
@@ -251,9 +284,6 @@ for (const variant of targets) {
   });
   const over1 = fill.p1 - AVAIL;
   const over2 = fill.p2 - AVAIL;
-  const fmt = (used, over) =>
-    `${Math.round(used)}/${Math.round(AVAIL)}px ` +
-    (over > 0 ? `OVERFLOW +${Math.round(over)}px` : `(${Math.round(-over)}px headroom)`);
 
   console.log(`\n${variant} — ${meta.label}`);
   console.log(`  page 1: ${fmt(fill.p1, over1)}`);
@@ -265,7 +295,19 @@ for (const variant of targets) {
     await page.close();
     continue;
   }
+  measured.push({ variant, meta, page });
+}
 
+// PASS 2 — all clear, so write. On failure nothing is written at all, leaving
+// the previously-good PDFs on disk rather than a half-updated set.
+if (failed) {
+  for (const { page } of measured) await page.close();
+  await browser.close();
+  console.error(`\n✗ No PDFs written — fix the overflow above and re-run.`);
+  process.exit(1);
+}
+
+for (const { variant, meta, page } of measured) {
   if (!MEASURE) {
     const out = path.join(root, `public/files/Michael_Lopez_Resume${meta.fileSuffix}.pdf`);
     fs.mkdirSync(path.dirname(out), { recursive: true });
@@ -275,10 +317,9 @@ for (const variant of targets) {
       printBackground: true,
       margin: { top: '0.5in', bottom: '0.45in', left: '0.6in', right: '0.6in' },
     });
-    console.log(`  wrote ${path.relative(root, out)}`);
+    console.log(`  wrote ${path.relative(root, out)} (${variant})`);
   }
   await page.close();
 }
 
 await browser.close();
-if (failed) process.exit(1);
