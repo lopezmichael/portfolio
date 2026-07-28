@@ -2,12 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ResumeEntry from '../components/ResumeEntry.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
-import { experience, education, skills, selectedProjects, webBullets } from '../data/resume';
+import { experience, education, skills, webBullets, webProjects } from '../data/resume';
 
-// First 4 experience entries are the connected CPAL spine.
-// Anything after is collapsed under an "Earlier experience" disclosure.
-const primaryExperience = experience.slice(0, 4);
-const earlierExperience = experience.slice(4);
+// CPAL roles are the connected spine; everything else collapses under an
+// "Earlier experience" disclosure. Filter on `group` rather than by position —
+// a positional slice(0, 4) disagreed with the PDF generator the moment a fifth
+// CPAL role was added.
+const primaryExperience = experience.filter((e) => e.group === 'cpal');
+const earlierExperience = experience.filter((e) => e.group !== 'cpal');
+const projects = webProjects();
 
 // Set to true once public/files/Michael_Lopez_Resume.pdf is added.
 const hasResumePdf = true;
@@ -212,7 +215,7 @@ const hasResumePdf = true;
             </ScrollReveal>
             <ScrollReveal>
               <ul class="space-y-3 text-sm">
-                {selectedProjects.map((proj) => (
+                {projects.map((proj) => (
                   <li class="flex gap-3">
                     <span class="w-1.5 h-1.5 bg-canyon shrink-0 mt-2" aria-hidden="true"></span>
                     <span class="leading-relaxed">

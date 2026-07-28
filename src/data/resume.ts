@@ -69,6 +69,19 @@ export function webBullets(role: Experience): string[] {
     .map((b) => b.text);
 }
 
+/**
+ * Projects and media for the web, honoring `only` the same way `webBullets`
+ * does. Without these the web rendered both collections unfiltered, so `only:
+ * 'print'` was a promise the type made and two of three consumers ignored.
+ */
+export function webProjects(): SelectedProject[] {
+  return selectedProjects.filter((p) => p.only !== 'print');
+}
+
+export function webMedia(): MediaItem[] {
+  return selectedMedia.filter((m) => m.only !== 'print');
+}
+
 export interface Education {
   degree: string;
   school: string;
@@ -79,8 +92,10 @@ export interface Education {
 export interface SkillCategory {
   label: string;
   items: string[];
-  /** Variants this row appears in for print. Omit for all. */
-  variants?: Variant[];
+  // NOTE: no `variants` here on purpose. Per-variant inclusion is already
+  // handled by `skillOrder`, which is exhaustive — a row it does not list is
+  // omitted from that variant. A second mechanism was dead (set on zero rows)
+  // and could only ever contradict the first.
 }
 
 export interface SelectedProject {
@@ -152,12 +167,10 @@ export const experience: Experience[] = [
     group: 'cpal',
     bullets: [
       {
-        text: 'Leading CPAL\'s data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35-40 pipelines from file-based storage onto unified cloud infrastructure',
-        print: "Lead CPAL's data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35–40 pipelines from file-based storage onto unified cloud infrastructure",
+        text: "Lead CPAL's data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35–40 pipelines from file-based storage onto unified cloud infrastructure",
       },
       {
-        text: 'Manage a 6-person external data engineering team via vendor partnership executing on the internal data roadmap, alongside one full-time data engineer reporting directly to me',
-        print: 'Manage a 6-person external data engineering team via vendor partnership executing the internal data roadmap, alongside one full-time data engineer reporting directly to me',
+        text: 'Manage a 6-person external data engineering team via vendor partnership executing the internal data roadmap, alongside one full-time data engineer reporting directly to me',
         variants: ['playercoach'],
       },
       {
@@ -185,12 +198,11 @@ export const experience: Experience[] = [
     bullets: [
       {
         text: 'Built CPAL\'s data function from the ground up; led hiring for the org\'s first data engineer and prior analyst roles',
-        // Kept in `platform` too: scope-of-ownership reads well for Staff/Principal.
-        variants: ['playercoach', 'research', 'platform'],
+        // Intentionally untagged: belongs in every variant. Scope-of-ownership
+        // reads well for Staff/Principal too, not just leadership.
       },
       {
-        text: 'Led the data org during CDO transition (Dec 2024 - Dec 2025): set department roadmap, hiring, vendor strategy, and budget; reported directly to the CTO',
-        print: 'Led the data org through the CDO transition (Dec 2024 to Dec 2025): set department roadmap, hiring, vendor strategy, and budget, reporting directly to the CTO',
+        text: 'Led the data org through the CDO transition (Dec 2024 to Dec 2025): set department roadmap, hiring, vendor strategy, and budget, reporting directly to the CTO',
         variants: ['playercoach'],
       },
       {
@@ -208,8 +220,7 @@ export const experience: Experience[] = [
         print: 'Oversaw a 30+ app R Shiny suite informing decisions across housing, public safety, maternal health, benefits delivery, and criminal justice',
       },
       {
-        text: 'Evaluated and selected the org\'s enterprise tooling stack: Databricks (chosen over Snowflake/dbt-Cloud after capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
-        print: 'Evaluated and selected the enterprise tooling stack: Databricks (over Snowflake / dbt-Cloud after a capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
+        text: 'Evaluated and selected the enterprise tooling stack: Databricks (over Snowflake / dbt-Cloud after a capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
         variants: ['playercoach', 'platform'],
       },
       {
@@ -230,22 +241,18 @@ export const experience: Experience[] = [
       {
         text: 'Ran CPAL\'s citywide risk terrain modeling on Dallas Police Department incident data joined to Data Axle property and business records (SIMSI platform), producing division-level environmental risk surfaces used to target place-based violence prevention',
         print: "Ran CPAL's citywide risk terrain modeling on Dallas PD incident data joined to Data Axle property and business records (SIMSI), producing division-level environmental risk surfaces to target place-based violence prevention",
-        // In `platform` as well: it is the strongest evidence of modeling depth
-        // beyond pipeline work, which a Staff/Principal screen looks for.
-        variants: ['playercoach', 'research', 'platform'],
+        // Intentionally untagged: belongs in every variant. Strongest evidence of
+        // modeling depth beyond pipeline work, which a Staff/Principal screen wants.
       },
       {
-        text: 'Led development of R Shiny applications, shifting organization toward interactive data products',
-        print: 'Led development of R Shiny applications, shifting the organization toward interactive data products',
+        text: 'Led development of R Shiny applications, shifting the organization toward interactive data products',
       },
       {
-        text: 'Contributed to development of northtexasevictions.org, a public-facing eviction data transparency tool',
-        print: 'Contributed to northtexasevictions.org, a public-facing eviction data transparency tool',
+        text: 'Contributed to northtexasevictions.org, a public-facing eviction data transparency tool',
         variants: ['platform'],
       },
       {
-        text: 'Mentored analytics interns; one intern subsequently hired as full-time analyst',
-        print: 'Mentored analytics interns; one was subsequently hired as a full-time analyst',
+        text: 'Mentored analytics interns; one was subsequently hired as a full-time analyst',
         variants: ['playercoach'],
       },
       {
@@ -271,13 +278,11 @@ export const experience: Experience[] = [
         // Web said "40K+ records annually" while print said "serving four
         // counties". The 40K figure was stale against the ~48,000 Dallas filings
         // cited elsewhere, so both forms now make the same claim.
-        text: 'Created initial eviction data pipeline in R, laying groundwork for the system now serving four North Texas counties',
-        print: 'Created the initial eviction data pipeline in R, laying the groundwork for the system now serving four North Texas counties',
+        text: 'Created the initial eviction data pipeline in R, laying the groundwork for the system now serving four North Texas counties',
       },
       {
         text: 'Built the Community Resource Explorer, an index measuring access to community resources (clinics, grocery stores, parks) within a two-mile band of every Dallas school campus to identify the least-resourced school neighborhoods; the analysis helped define disbursement of a $1.25B bond package',
         print: 'Built the Community Resource Explorer, indexing community-resource access within two miles of every Dallas school campus to find the least-resourced neighborhoods; helped define disbursement of a $1.25B bond package',
-        variants: ['playercoach', 'research', 'platform'],
       },
       'Developed dashboards and reports in R, QGIS, Tableau, and ArcGIS for internal teams and community partners',
       {
@@ -468,15 +473,12 @@ export const selectedProjects: SelectedProject[] = [
     // experience bullet and is the current figure.
     description:
       'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; ~48,000 Dallas filings a year turned into tenant outreach',
-    print:
-      'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; ~48,000 Dallas filings a year turned into tenant outreach.',
   },
   {
     name: 'North Texas Evictions',
     // Print used to scope a site called *North* Texas Evictions to "Dallas
     // County", contradicting the four-counties bullet three lines away.
     description: 'Public-facing eviction data transparency dashboard for North Texas',
-    print: 'Public-facing eviction data transparency dashboard for North Texas.',
     href: 'https://northtexasevictions.org',
     tag: 'northtexasevictions.org',
     // NOT in `platform`: that variant carries the "Contributed to
@@ -500,8 +502,6 @@ export const selectedProjects: SelectedProject[] = [
     name: 'Rental Housing Needs Assessment',
     description:
       'Annual public report modeling Dallas\'s rental supply gap; 33,660-unit shortfall at or below 50% AMI, projected to 83,500 by 2030',
-    print:
-      "Annual public report modeling Dallas's rental supply gap; 33,660-unit shortfall at or below 50% AMI, projected to 83,500 by 2030.",
     href: 'https://childpovertyactionlab.imgix.net/CPAL-Rental-Housing-Needs-Assessment-2024.pdf',
     // Already an experience bullet in playercoach/research, so print only where
     // it is NOT duplicated. Web always shows it.

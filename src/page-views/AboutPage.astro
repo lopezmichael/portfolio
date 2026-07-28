@@ -2,10 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SkillsGrid from '../components/SkillsGrid.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
-import { selectedMedia } from '../data/resume';
+import { webMedia } from '../data/resume';
 
-const press = selectedMedia.filter((m) => m.type === 'press');
-const viz = selectedMedia.filter((m) => m.type === 'visualization');
+// webMedia() honors `only`, so print-only entries never reach the site.
+const media = webMedia();
+const press = media.filter((m) => m.type === 'press');
+const viz = media.filter((m) => m.type === 'visualization');
 ---
 
 <BaseLayout
@@ -111,7 +113,7 @@ const viz = selectedMedia.filter((m) => m.type === 'visualization');
       </ScrollReveal>
 
       <!-- Selected Media & Visualizations (inline list, hairline dividers) -->
-      {selectedMedia.length > 0 && (
+      {media.length > 0 && (
         <ScrollReveal>
           <section class="mt-16 lg:mt-20">
             <h2 class="text-xl lg:text-2xl font-semibold text-primary dark:text-dark-text mb-8 flex items-center gap-3">

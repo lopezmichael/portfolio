@@ -21,6 +21,7 @@
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   experience as allExperience,
   education,
@@ -33,7 +34,10 @@ import {
   printBullets,
 } from '../src/data/resume.ts';
 
-const root = '/Users/michaellopez/repos/lopezmichael-web';
+// Resolve from this file rather than a hardcoded absolute path, so the script
+// works from any clone or checkout location (the data import at the top of this
+// file was already relative; the two disagreed).
+const root = fileURLToPath(new URL('..', import.meta.url));
 const fdir = path.join(root, 'node_modules/@fontsource/inter/files');
 const b64 = (f) => fs.readFileSync(path.join(fdir, f)).toString('base64');
 const f400 = b64('inter-latin-400-normal.woff2');
@@ -77,15 +81,39 @@ for (let i = 0; i < argv.length; i++) {
 const targets = requested ? [requested] : VARIANTS;
 
 // --- data derived from src/data/resume.ts ---
-const cpalRoles = allExperience.filter((r) => r.group === 'cpal');
+// `inPrint: false` now excludes a role from print regardless of its group. It
+// used to be consulted only on the `earlier` branch, so a `cpal` role marked
+// inPrint:false would still have printed.
+const inPrint = (r) => r.inPrint !== false;
+
+for (const r of allExperience) {
+  if (!r.group) {
+    throw new Error(
+      `Experience entry "${r.title}" has no \`group\`. Print needs 'cpal' or 'earlier'; ` +
+      `an untagged role is silently dropped from every PDF.`
+    );
+  }
+}
+
+const cpalRoles = allExperience.filter((r) => r.group === 'cpal' && inPrint(r));
 const earlier = allExperience
-  .filter((r) => r.group === 'earlier' && r.inPrint !== false)
-  .map((e) => ({
-    title: e.title,
-    company: e.company,
-    dates: e.printDates ?? e.dates,
-    line: e.printLine ?? '',
-  }));
+  .filter((r) => r.group === 'earlier' && inPrint(r))
+  .map((e) => {
+    // An included `earlier` role with no printLine used to render an empty
+    // <p class="earlier-line"> under a real job title.
+    if (!e.printLine) {
+      throw new Error(
+        `Earlier role "${e.title}" is included in print but has no \`printLine\`. ` +
+        `Add one, or set \`inPrint: false\`.`
+      );
+    }
+    return {
+      title: e.title,
+      company: e.company,
+      dates: e.printDates ?? e.dates,
+      line: e.printLine,
+    };
+  });
 
 const experienceFor = (variant) =>
   cpalRoles
@@ -152,7 +180,13 @@ const skillsHtmlFor = (variant) => skillsFor(variant).map((c) => `
 
 const eduHtml = education.map((e) => `<div class="edu-row"><span><strong>${esc(e.degree)}</strong>, ${esc(e.school)}</span>${e.year ? `<span class="dates">${esc(e.year)}</span>` : ''}</div>`).join('');
 
-const projHtmlFor = (variant) => projectsFor(variant).map((p) => `<li><span class="p-name">${esc(p.name)}${p.tag ? ` <span class="p-tag">${esc(p.tag)}</span>` : ''}.</span> ${esc(p.desc)}</li>`).join('');
+// Print renders project descriptions as sentences, so it terminates them.
+// This used to live in the data as `print` overrides that differed from the web
+// copy by a trailing period and nothing else — three duplicated strings to keep
+// in lockstep for one character. Punctuation is a rendering concern.
+const sentence = (s) => (/[.!?]$/.test(s) ? s : `${s}.`);
+
+const projHtmlFor = (variant) => projectsFor(variant).map((p) => `<li><span class="p-name">${esc(p.name)}${p.tag ? ` <span class="p-tag">${esc(p.tag)}</span>` : ''}.</span> ${esc(sentence(p.desc))}</li>`).join('');
 
 const mediaHtml = media.map((m) => `<li><strong>${esc(m.outlet)}:</strong> ${esc(m.title)}</li>`).join('');
 
