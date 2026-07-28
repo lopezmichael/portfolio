@@ -12,12 +12,19 @@
 // `print` overrides, and per-variant inclusion via `variants` / `only` tags.
 // If you are on Node < 22.6 this import will fail; that is the only constraint.
 //
-// PAGE BUDGET — every variant must stay 2 pages. "Earlier Leadership & Policy
-// Experience" forces a break, so page 1 holds the header, summary, and all CPAL
-// experience. This script MEASURES each variant and FAILS if one overflows,
-// rather than silently emitting a 3-page resume. If a variant overflows, cut a
-// bullet from that variant's tags, prefer ones already covered in Selected
-// Projects. Run with --measure to see current headroom.
+// PAGE BUDGET — every variant must stay 2 pages. Each one is RENDERED and its
+// pages COUNTED; the script fails rather than silently emitting a 3-page resume.
+// If a variant overflows, cut a bullet tagged for it (prefer ones already
+// covered in Selected Projects). Run with --measure to see remaining room.
+//
+// Content flows naturally across the two pages. There used to be a forced break
+// before "Earlier Leadership & Policy Experience", which meant page 1 alone had
+// to hold all CPAL experience — a strictly tighter constraint than "2 pages",
+// and it left the default variant with 15px of slack while a fifth of page 2 sat
+// empty. Removing it changed no output (the content already broke at that
+// boundary) and returned ~12 lines of headroom. `break-inside: avoid` keeps
+// roles and skill rows from splitting mid-element. To force a hard break again,
+// add class="page-break" to a heading; the rule is still defined below.
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -214,7 +221,12 @@ a{color:#8B2D3D;text-decoration:none;}
 
 /* Section headings */
 h2{display:flex;align-items:center;gap:8px;font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:#8B2D3D;margin:13px 0 7px;}
+/* Available if a hard break is ever wanted again: add class="page-break". */
 h2.page-break{break-before:page;page-break-before:always;margin-top:0;padding-top:2px;}
+/* Keep a role, an earlier entry, or a skill row from splitting across pages. */
+.role,.earlier,.skill-row,.edu-row{break-inside:avoid;page-break-inside:avoid;}
+/* Never strand a section heading at the bottom of a page. */
+h2{break-after:avoid;page-break-after:avoid;}
 h2::before{content:'';width:11px;height:11px;background:#A04428;border-radius:2px;flex:0 0 auto;}
 h2::after{content:'';flex:1;height:1px;background:#e3c9a6;}
 
@@ -272,7 +284,7 @@ li::marker{color:#A04428;}
   <div class="company">Child Poverty Action Lab <span class="co-meta">DALLAS, TX · 2020 – PRESENT</span></div>
   <div class="spine">${roleHtmlFor(variant)}</div>
 
-  <h2 class="page-break">Earlier Leadership &amp; Policy Experience</h2>
+  <h2>Earlier Leadership &amp; Policy Experience</h2>
   ${earlierHtml}
 
   <h2>Skills</h2>
@@ -292,9 +304,20 @@ const AVAIL = (11 - 0.5 - 0.45) * 96; // Letter height minus vertical margins
 const PRINT_W = Math.round((8.5 - 1.2) * 96); // Letter width minus horizontal margins
 
 const browser = await chromium.launch();
-const fmt = (used, over) =>
-  `${Math.round(used)}/${Math.round(AVAIL)}px ` +
-  (over > 0 ? `OVERFLOW +${Math.round(over)}px` : `(${Math.round(-over)}px headroom)`);
+const MAX_PAGES = 2;
+const BUDGET = MAX_PAGES * AVAIL;
+const pdfOpts = {
+  format: 'Letter',
+  printBackground: true,
+  margin: { top: '0.5in', bottom: '0.45in', left: '0.6in', right: '0.6in' },
+};
+
+// Count pages from the rendered bytes. Height alone is only an ESTIMATE: with
+// break-inside:avoid, a role that will not fit at the bottom of a page moves
+// wholly to the next one and leaves a gap, so total height can be under budget
+// while the real document spills to 3 pages. Rendering first and counting is
+// exact.
+const pageCount = (buf) => (buf.toString('latin1').match(/\/Type\s*\/Page(?![s])/g) || []).length;
 
 // PASS 1 — measure every requested variant before writing ANY of them.
 // Writing as we go left a mixed state on failure: an overflowing default would
@@ -311,49 +334,45 @@ for (const variant of targets) {
   await page.emulateMedia({ media: 'print' });
   await page.evaluate(async () => { await document.fonts.ready; });
 
-  const fill = await page.evaluate(() => {
-    const brk = document.querySelector('h2.page-break');
-    const p1 = brk.getBoundingClientRect().top + window.scrollY;
-    return { p1, p2: document.body.getBoundingClientRect().height - p1 };
-  });
-  const over1 = fill.p1 - AVAIL;
-  const over2 = fill.p2 - AVAIL;
+  // Render once, to a buffer, and count the pages that actually came out.
+  const buf = await page.pdf(pdfOpts);
+  const pages = pageCount(buf);
+  const height = await page.evaluate(() => document.body.getBoundingClientRect().height);
+  const slack = BUDGET - height;
 
   console.log(`\n${variant} — ${meta.label}`);
-  console.log(`  page 1: ${fmt(fill.p1, over1)}`);
-  console.log(`  page 2: ${fmt(fill.p2, over2)}`);
+  console.log(
+    `  ${pages} page${pages === 1 ? '' : 's'} · content ${Math.round(height)}/${Math.round(BUDGET)}px · ` +
+    (slack >= 0 ? `~${Math.round(slack)}px (${Math.round(slack / 17.6)} lines) of room` : `over by ${Math.round(-slack)}px`)
+  );
 
-  if (over1 > 0 || over2 > 0) {
-    console.error(`  ✗ ${variant} exceeds 2 pages. Cut a bullet tagged '${variant}' (prefer ones already in Selected Projects).`);
+  if (pages > MAX_PAGES) {
+    console.error(
+      `  ✗ ${variant} renders ${pages} pages, max is ${MAX_PAGES}. ` +
+      `Cut a bullet tagged '${variant}' (prefer ones already covered in Selected Projects).`
+    );
     failed = true;
     await page.close();
     continue;
   }
-  measured.push({ variant, meta, page });
+  measured.push({ variant, meta, buf });
+  await page.close();
 }
 
 // PASS 2 — all clear, so write. On failure nothing is written at all, leaving
 // the previously-good PDFs on disk rather than a half-updated set.
+await browser.close();
+
 if (failed) {
-  for (const { page } of measured) await page.close();
-  await browser.close();
   console.error(`\n✗ No PDFs written — fix the overflow above and re-run.`);
   process.exit(1);
 }
 
-for (const { variant, meta, page } of measured) {
-  if (!MEASURE) {
+if (!MEASURE) {
+  for (const { variant, meta, buf } of measured) {
     const out = path.join(root, `public/files/Michael_Lopez_Resume${meta.fileSuffix}.pdf`);
     fs.mkdirSync(path.dirname(out), { recursive: true });
-    await page.pdf({
-      path: out,
-      format: 'Letter',
-      printBackground: true,
-      margin: { top: '0.5in', bottom: '0.45in', left: '0.6in', right: '0.6in' },
-    });
+    fs.writeFileSync(out, buf);
     console.log(`  wrote ${path.relative(root, out)} (${variant})`);
   }
-  await page.close();
 }
-
-await browser.close();
