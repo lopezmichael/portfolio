@@ -359,9 +359,12 @@ export const education: Education[] = [
     school: 'University of Texas at Dallas',
   },
   {
+    // Both degrees are intentionally undated. One dated and one undated reads as
+    // an oversight and draws the eye straight to the missing one; neither dated
+    // reads as a formatting convention. The experience section runs from 2013,
+    // so no timeline is being concealed.
     degree: 'Bachelor of Arts, Psychology & Anthropology',
     school: 'Florida International University',
-    year: '2015',
   },
 ];
 
@@ -372,7 +375,7 @@ export const skills: SkillCategory[] = [
   },
   {
     label: 'Visualization & Geospatial',
-    items: ['R Shiny', 'Tableau', 'Highcharts', 'Mapbox GL', 'Spatial SQL', 'QGIS', 'ArcGIS'],
+    items: ['R Shiny', 'Tableau', 'Mapbox GL', 'Spatial SQL', 'QGIS', 'ArcGIS'],
   },
   {
     label: 'Methods',
@@ -392,7 +395,7 @@ export const skills: SkillCategory[] = [
   },
   {
     label: 'Orchestration & Infra',
-    items: ['Terraform', 'GitHub Actions', 'Docker', 'AWS', 'Vercel', 'Prefect', 'Structured logging'],
+    items: ['Terraform', 'GitHub Actions', 'Docker', 'AWS'],
   },
 ];
 
@@ -402,12 +405,14 @@ export const skills: SkillCategory[] = [
  * Leading rows carry the most weight, so each variant front-loads its lane.
  */
 export const skillOrder: Record<Variant, string[]> = {
+  // playercoach omits 'Orchestration & Infra' on purpose: a Director-level
+  // reader is not grading Docker, and the row carried the weakest chips.
+  // `platform` keeps it near the top, which is the whole point of variants.
   playercoach: [
     'Analysis & Languages',
     'Data Platform',
     'Visualization & Geospatial',
     'AI Workflows',
-    'Orchestration & Infra',
     'Methods',
     'Domains',
   ],
