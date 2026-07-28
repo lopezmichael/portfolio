@@ -10,6 +10,8 @@
     "astro": "astro",
     "screenshots": "node scripts/generate-screenshots.mjs",
     "resume:pdf": "node scripts/generate-resume-pdf.mjs",
+    "resume:measure": "node scripts/generate-resume-pdf.mjs --measure",
+    "resume:variants": "node scripts/generate-resume-pdf.mjs --list",
     "cover:pdf": "node scripts/generate-cover-letter-pdf.mjs"
   },
   "dependencies": {

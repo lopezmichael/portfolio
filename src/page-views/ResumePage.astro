@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ResumeEntry from '../components/ResumeEntry.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
-import { experience, education, skills, selectedProjects } from '../data/resume';
+import { experience, education, skills, selectedProjects, webBullets } from '../data/resume';
 
 // First 4 experience entries are the connected CPAL spine.
 // Anything after is collapsed under an "Earlier experience" disclosure.
@@ -144,7 +144,7 @@ const hasResumePdf = true;
                       <p class="text-sm italic mt-3 opacity-80 leading-relaxed">{entry.summary}</p>
                     )}
                     <ul class="mt-3 space-y-1.5 list-disc list-outside ml-5">
-                      {entry.bullets.map((bullet) => (
+                      {webBullets(entry).map((bullet) => (
                         <li class="text-sm leading-relaxed">{bullet}</li>
                       ))}
                     </ul>
@@ -168,7 +168,7 @@ const hasResumePdf = true;
                       company={entry.company}
                       dates={entry.dates}
                       summary={entry.summary}
-                      bullets={entry.bullets}
+                      bullets={webBullets(entry)}
                     />
                   ))}
                 </div>

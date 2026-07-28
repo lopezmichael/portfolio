@@ -1,22 +1,37 @@
-// Generates public/files/Michael_Lopez_Resume.pdf — a designed, ATS-friendly
-// resume rendered with Playwright (real selectable text, embedded Inter).
-// Run: `npm run resume:pdf` (needs `npx playwright install chromium`).
-// NOTE: the data below MIRRORS src/data/resume.ts. It is NOT auto-synced —
-// if you edit resume.ts, update the arrays here and re-run this script.
+// Generates designed, ATS-friendly resume PDFs with Playwright (real selectable
+// text, embedded Inter).
 //
-// PAGE BUDGET (measured 2026-07-27) — this resume must stay 2 pages.
-// "Earlier Leadership & Policy Experience" forces a break, so:
-//   page 1 = header + summary + all CPAL experience  → 950px used of 965px (15px headroom)
-//   page 2 = earlier roles + skills + education + projects + media → 770px of 965px
-// Page 1 has room for roughly ONE more line. Adding a bullet there will push the
-// resume to 3 pages. If you add one, cut one. The print version is deliberately
-// leaner than src/data/resume.ts (the web version has no page constraint), so
-// prefer dropping bullets already covered in Selected Projects.
-// To re-measure: copy this file, replace the page.pdf() call with a
-// getBoundingClientRect() probe on h2.page-break at viewport width (8.5-1.2)*96.
+//   npm run resume:pdf                    → all variants
+//   npm run resume:pdf -- --variant=platform
+//   npm run resume:pdf -- --measure       → report page fill, write nothing
+//   npm run resume:pdf -- --list          → list variants
+//
+// SINGLE SOURCE OF TRUTH: all content comes from src/data/resume.ts, imported
+// directly (Node strips TS types natively; verified on Node 25). There is no
+// mirrored copy here anymore. Print-specific wording lives in the data as
+// `print` overrides, and per-variant inclusion via `variants` / `only` tags.
+// If you are on Node < 22.6 this import will fail; that is the only constraint.
+//
+// PAGE BUDGET — every variant must stay 2 pages. "Earlier Leadership & Policy
+// Experience" forces a break, so page 1 holds the header, summary, and all CPAL
+// experience. This script MEASURES each variant and FAILS if one overflows,
+// rather than silently emitting a 3-page resume. If a variant overflows, cut a
+// bullet from that variant's tags, prefer ones already covered in Selected
+// Projects. Run with --measure to see current headroom.
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  experience as allExperience,
+  education,
+  skills,
+  skillOrder,
+  selectedMedia,
+  selectedProjects,
+  variantMeta,
+  VARIANTS,
+  printBullets,
+} from '../src/data/resume.ts';
 
 const root = '/Users/michaellopez/repos/lopezmichael-web';
 const fdir = path.join(root, 'node_modules/@fontsource/inter/files');
@@ -28,73 +43,62 @@ const f700 = b64('inter-latin-700-normal.woff2');
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// --- data (mirrors src/data/resume.ts) ---
-const experience = [
-  { title: 'Director, Data Operations', dates: 'Jan 2026 – Present', bullets: [
-    "Lead CPAL's data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35–40 pipelines from file-based storage onto unified cloud infrastructure",
-    'Manage a 6-person external data engineering team via vendor partnership executing the internal data roadmap, alongside one full-time data engineer reporting directly to me',
-    'Built AI-enabled team workflows (Claude Code with custom skills and agents, prompt caching with the Anthropic API), including multi-agent code review with independent verification, accelerating how we develop pipelines, write documentation, review code, and communicate with stakeholders',
-    // Parcel-outreach bullet intentionally dropped from the print resume: it is
-    // already covered in Selected Projects and page 1 is height-constrained.
-    'Maintain the eviction data workstream across four North Texas counties (~48,000 Dallas filings in 2025), feeding 12+ partners daily including the Dallas Eviction Advocacy Center and the Princeton Eviction Lab',
-  ]},
-  { title: 'Director, Data', dates: 'May 2023 – Dec 2025', bullets: [
-    "Built CPAL's data function from the ground up; led hiring for the org's first data engineer and prior analyst roles",
-    'Led the data org through the CDO transition (Dec 2024 to Dec 2025): set department roadmap, hiring, vendor strategy, and budget, reporting directly to the CTO',
-    "Directed CPAL's citywide risk terrain modeling through 2024; division-level findings informed Office of Integrated Public Safety Solutions deployment and drove blight-remediation site selection and neighborhood amenity construction",
-    "Modeled Dallas's rental supply gap for CPAL's annual Rental Housing Needs Assessment (2023–2024): a 33,660-unit shortfall at or below 50% AMI, projected to 83,500 by 2030",
-    'Oversaw a 30+ app R Shiny suite informing decisions across housing, public safety, maternal health, benefits delivery, and criminal justice',
-    'Evaluated and selected the enterprise tooling stack: Databricks (over Snowflake / dbt-Cloud after a capacity assessment), Claude Enterprise org-wide, vendor data feeds (MySidewalk, DataAxle)',
-  ]},
-  { title: 'Manager, Data', dates: 'May 2022 – May 2023', bullets: [
-    "Ran CPAL's citywide risk terrain modeling on Dallas PD incident data joined to Data Axle property and business records (SIMSI), producing division-level environmental risk surfaces to target place-based violence prevention",
-    'Led development of R Shiny applications, shifting the organization toward interactive data products',
-    // northtexasevictions.org bullet dropped here — already in Selected Projects.
-    'Mentored analytics interns; one was subsequently hired as a full-time analyst',
-  ]},
-  { title: 'Associate, Data', dates: 'Jun 2020 – Apr 2022', bullets: [
-    'Created the initial eviction data pipeline in R, laying the groundwork for the system now serving four counties',
-    'Built the Community Resource Explorer, indexing community-resource access within two miles of every Dallas school campus to find the least-resourced neighborhoods; helped define disbursement of a $1.25B bond package',
-    'Developed dashboards and reports in R, QGIS, Tableau, and ArcGIS for internal teams and community partners',
-  ]},
-];
+// --- variant selection ---
+const argv = process.argv.slice(2);
+const arg = (name) => {
+  const hit = argv.find((a) => a.startsWith(`--${name}=`));
+  return hit ? hit.split('=')[1] : undefined;
+};
+const MEASURE = argv.includes('--measure');
+if (argv.includes('--list')) {
+  for (const v of VARIANTS) console.log(`${v.padEnd(12)} ${variantMeta[v].label}`);
+  process.exit(0);
+}
+const requested = arg('variant');
+if (requested && !VARIANTS.includes(requested)) {
+  console.error(`Unknown variant "${requested}". Known: ${VARIANTS.join(', ')}`);
+  process.exit(1);
+}
+const targets = requested ? [requested] : VARIANTS;
 
-const earlier = [
-  { title: 'Health & Social Policy Intern', company: 'Children at Risk', dates: 'Jun 2019 – Aug 2019', line: 'Led policy research on early childhood development and developed policy briefs for senior leadership and state stakeholders.' },
-  { title: 'Research Coordinator', company: 'University of Texas at Dallas', dates: 'Aug 2016 – Dec 2018', line: 'Managed the Developmental Neurolinguistics Lab; recruited, trained, and supervised 10–15 research assistants each semester and 300+ participants.' },
-];
+// --- data derived from src/data/resume.ts ---
+const cpalRoles = allExperience.filter((r) => r.group === 'cpal');
+const earlier = allExperience
+  .filter((r) => r.group === 'earlier' && r.inPrint !== false)
+  .map((e) => ({
+    title: e.title,
+    company: e.company,
+    dates: e.printDates ?? e.dates,
+    line: e.printLine ?? '',
+  }));
 
-const education = [
-  { degree: 'Master of Public Policy', school: 'University of Texas at Dallas' },
-  { degree: 'B.A., Psychology & Anthropology', school: 'Florida International University', year: '2015' },
-];
+const experienceFor = (variant) =>
+  cpalRoles
+    .map((r) => ({
+      title: r.title,
+      dates: r.printDates ?? r.dates,
+      bullets: printBullets(r, variant),
+    }))
+    .filter((r) => r.bullets.length > 0);
 
-const skills = [
-  { label: 'Analysis & Languages', items: ['R (tidyverse, sf, Shiny)', 'SQL', 'Python', 'TypeScript'] },
-  { label: 'Visualization & Geospatial', items: ['R Shiny', 'Tableau', 'Highcharts', 'Mapbox GL', 'Spatial SQL', 'QGIS', 'ArcGIS'] },
-  { label: 'Data Platform', items: ['Databricks (Lakehouse + Unity Catalog)', 'PostgreSQL / Neon', 'DuckDB', 'Polars', 'PostGIS', 'CKAN'] },
-  { label: 'AI Workflows', items: ['Claude Code (custom skills & agents)', 'Anthropic API', 'Google Cloud Vision (OCR)'] },
-  { label: 'Orchestration & Infra', items: ['Terraform', 'GitHub Actions', 'Docker', 'AWS', 'Vercel', 'Prefect', 'Structured logging'] },
-  { label: 'Methods', items: ['Risk Terrain Modeling', 'Index Construction & PCA', 'Spatial Analysis', 'Needs Assessment & Supply Modeling'] },
-  { label: 'Domains', items: ['Housing & Eviction', 'Public Safety', 'Criminal Justice', 'Maternal Health', 'Benefits Delivery', 'Community Development'] },
-];
+const skillsFor = (variant) => {
+  const order = skillOrder[variant] ?? skills.map((s) => s.label);
+  return order
+    .map((label) => skills.find((s) => s.label === label))
+    .filter(Boolean)
+    .filter((s) => !s.variants || s.variants.includes(variant));
+};
 
-const projects = [
-  { name: 'Dallas County Eviction Data', desc: 'Daily eviction-filing feed reaching 12+ legal-aid and outreach partners; ~48,000 Dallas filings a year turned into tenant outreach.' },
-  { name: 'DigiLab', desc: 'Community-sourced tournament data platform for the global Digimon TCG scene; 5,000+ tournaments logged in six months, with regional meta analysis players use to prep.', tag: 'digilab.cards' },
-  { name: 'Parcel Block Walking Tool', desc: 'Field-outreach tool flagging homes likely missing a homestead exemption; ~20 active field-team users across outreach partners.' },
-  // NOTE: Rental Housing Needs Assessment and Community Resource Explorer are
-  // intentionally NOT listed here — both already appear as experience bullets,
-  // and the print resume is page-constrained. They ARE listed in src/data/resume.ts
-  // for the web version, which has no such constraint.
-  { name: 'North Texas Evictions', desc: 'Public-facing eviction data transparency dashboard for Dallas County.', tag: 'northtexasevictions.org' },
-];
+const projectsFor = (variant) =>
+  selectedProjects
+    .filter((p) => p.only !== 'web')
+    .filter((p) => !p.variants || p.variants.includes(variant))
+    .map((p) => ({ name: p.name, desc: p.print ?? p.description, tag: p.tag }));
 
-const media = [
-  { outlet: 'The Lab Report', title: 'Data visualizations for Dallas homeless-enforcement and patrol-staffing analyses (2026)' },
-  { outlet: 'D Magazine', title: "“The Lawyer Who Landlords Don’t Want to See in Court” (2024)" },
-  { outlet: 'KERA News', title: '“Eviction less likely for Dallas County tenants who get a lawyer” (2024)' },
-];
+const media = selectedMedia
+  .filter((m) => m.only !== 'web')
+  .map((m) => ({ outlet: m.outlet, title: m.print ?? `${m.title} (${m.date})` }));
+
 
 // contour paths (echoes the site OG / hero terrain motif)
 const contour = `
@@ -103,7 +107,7 @@ const contour = `
   <path d="M0 82 Q100 72 220 78 T460 74 T700 82 T940 76 T1000 80" />`;
 
 // --- render helpers ---
-const roleHtml = experience.map((e) => `
+const roleHtmlFor = (variant) => experienceFor(variant).map((e) => `
   <div class="role">
     <div class="role-head"><span class="role-title">${esc(e.title)}</span><span class="dates">${esc(e.dates)}</span></div>
     <ul>${e.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
@@ -115,7 +119,7 @@ const earlierHtml = earlier.map((e) => `
     <p class="earlier-line">${esc(e.line)}</p>
   </div>`).join('');
 
-const skillsHtml = skills.map((c) => `
+const skillsHtmlFor = (variant) => skillsFor(variant).map((c) => `
   <div class="skill-row">
     <div class="skill-label">${esc(c.label)}</div>
     <div class="chips">${c.items.map((i) => `<span class="chip">${esc(i)}</span>`).join('')}</div>
@@ -123,11 +127,11 @@ const skillsHtml = skills.map((c) => `
 
 const eduHtml = education.map((e) => `<div class="edu-row"><span><strong>${esc(e.degree)}</strong>, ${esc(e.school)}</span>${e.year ? `<span class="dates">${esc(e.year)}</span>` : ''}</div>`).join('');
 
-const projHtml = projects.map((p) => `<li><span class="p-name">${esc(p.name)}${p.tag ? ` <span class="p-tag">${esc(p.tag)}</span>` : ''}.</span> ${esc(p.desc)}</li>`).join('');
+const projHtmlFor = (variant) => projectsFor(variant).map((p) => `<li><span class="p-name">${esc(p.name)}${p.tag ? ` <span class="p-tag">${esc(p.tag)}</span>` : ''}.</span> ${esc(p.desc)}</li>`).join('');
 
 const mediaHtml = media.map((m) => `<li><strong>${esc(m.outlet)}:</strong> ${esc(m.title)}</li>`).join('');
 
-const html = `<!doctype html><html><head><meta charset="utf-8"><style>
+const htmlFor = (variant) => `<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face{font-family:'Inter';font-weight:400;src:url(data:font/woff2;base64,${f400}) format('woff2');}
 @font-face{font-family:'Inter';font-weight:500;src:url(data:font/woff2;base64,${f500}) format('woff2');}
 @font-face{font-family:'Inter';font-weight:600;src:url(data:font/woff2;base64,${f600}) format('woff2');}
@@ -203,34 +207,78 @@ li::marker{color:#A04428;}
     </div>
   </div>
 
-  <p class="summary">Data strategist and operations leader. Six years building the Child Poverty Action Lab's data function from the ground up: the team, the Databricks platform, and the tools that turn public and administrative data into decisions across housing, public safety, maternal health, and benefits delivery.</p>
+  <p class="summary">${esc(variantMeta[variant].summary)}</p>
 
   <h2>Experience</h2>
   <div class="company">Child Poverty Action Lab <span class="co-meta">DALLAS, TX · 2020 – PRESENT</span></div>
-  <div class="spine">${roleHtml}</div>
+  <div class="spine">${roleHtmlFor(variant)}</div>
 
   <h2 class="page-break">Earlier Leadership &amp; Policy Experience</h2>
   ${earlierHtml}
 
   <h2>Skills</h2>
-  ${skillsHtml}
+  ${skillsHtmlFor(variant)}
 
   <h2>Education</h2>
   ${eduHtml}
 
   <h2>Selected Projects</h2>
-  <ul class="section-list">${projHtml}</ul>
+  <ul class="section-list">${projHtmlFor(variant)}</ul>
 
   <h2>Selected Media</h2>
   <ul class="section-list">${mediaHtml}</ul>
 </body></html>`;
 
-const out = path.join(root, 'public/files/Michael_Lopez_Resume.pdf');
-fs.mkdirSync(path.dirname(out), { recursive: true });
+const AVAIL = (11 - 0.5 - 0.45) * 96; // Letter height minus vertical margins
+const PRINT_W = Math.round((8.5 - 1.2) * 96); // Letter width minus horizontal margins
+
 const browser = await chromium.launch();
-const page = await browser.newPage();
-await page.setContent(html, { waitUntil: 'load' });
-await page.evaluate(async () => { await document.fonts.ready; });
-await page.pdf({ path: out, format: 'Letter', printBackground: true, margin: { top: '0.5in', bottom: '0.45in', left: '0.6in', right: '0.6in' } });
+let failed = false;
+
+for (const variant of targets) {
+  const meta = variantMeta[variant];
+  const page = await browser.newPage();
+  await page.setViewportSize({ width: PRINT_W, height: Math.round(AVAIL) });
+  await page.setContent(htmlFor(variant), { waitUntil: 'load' });
+  await page.emulateMedia({ media: 'print' });
+  await page.evaluate(async () => { await document.fonts.ready; });
+
+  // Measure the two forced-break sections before committing to a PDF.
+  const fill = await page.evaluate(() => {
+    const brk = document.querySelector('h2.page-break');
+    const p1 = brk.getBoundingClientRect().top + window.scrollY;
+    return { p1, p2: document.body.getBoundingClientRect().height - p1 };
+  });
+  const over1 = fill.p1 - AVAIL;
+  const over2 = fill.p2 - AVAIL;
+  const fmt = (used, over) =>
+    `${Math.round(used)}/${Math.round(AVAIL)}px ` +
+    (over > 0 ? `OVERFLOW +${Math.round(over)}px` : `(${Math.round(-over)}px headroom)`);
+
+  console.log(`\n${variant} — ${meta.label}`);
+  console.log(`  page 1: ${fmt(fill.p1, over1)}`);
+  console.log(`  page 2: ${fmt(fill.p2, over2)}`);
+
+  if (over1 > 0 || over2 > 0) {
+    console.error(`  ✗ ${variant} exceeds 2 pages. Cut a bullet tagged '${variant}' (prefer ones already in Selected Projects).`);
+    failed = true;
+    await page.close();
+    continue;
+  }
+
+  if (!MEASURE) {
+    const out = path.join(root, `public/files/Michael_Lopez_Resume${meta.fileSuffix}.pdf`);
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    await page.pdf({
+      path: out,
+      format: 'Letter',
+      printBackground: true,
+      margin: { top: '0.5in', bottom: '0.45in', left: '0.6in', right: '0.6in' },
+    });
+    console.log(`  wrote ${path.relative(root, out)}`);
+  }
+  await page.close();
+}
+
 await browser.close();
-console.log('wrote', out);
+if (failed) process.exit(1);
