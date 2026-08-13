@@ -140,13 +140,13 @@ export const variantMeta: Record<Variant, VariantMeta> = {
     fileSuffix: '',
     label: 'Player-coach (leadership + platform) — DEFAULT',
     summary:
-      "Data leader who still builds. Six years growing the Child Poverty Action Lab's data function from one analyst to a seven-person team while personally building the Databricks platform, the eviction pipeline, and the spatial models underneath it. I take teams and systems from nothing to running.",
+      "Data leader who still builds. Six years growing the Child Poverty Action Lab's data function from one analyst to a six-person team while personally building the Databricks platform, the eviction pipeline, and the spatial models underneath it. I take teams and systems from nothing to running.",
   },
   platform: {
     fileSuffix: '_Platform',
     label: 'Platform (senior IC / Staff+)',
     summary:
-      "Data and platform engineer with six years turning public and administrative data into systems people rely on. I lead the Child Poverty Action Lab's migration of 35-40 pipelines onto Databricks, built its eviction data infrastructure from scratch, and run a production analytics platform of my own end to end.",
+      "Data and platform engineer with six years turning public and administrative data into systems people rely on. I lead the Child Poverty Action Lab's migration of around 40 pipelines onto Databricks, built its eviction data infrastructure from scratch, and run a production analytics platform of my own end to end.",
   },
   research: {
     fileSuffix: '_Research',
@@ -167,10 +167,10 @@ export const experience: Experience[] = [
     group: 'cpal',
     bullets: [
       {
-        text: "Lead CPAL's data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing 35–40 pipelines from file-based storage onto unified cloud infrastructure",
+        text: "Lead CPAL's data platform migration to Databricks (Unity Catalog, Workflows, Lakebase + Lakehouse on AWS, Git-tracked orchestration), systematizing around 40 pipelines from file-based storage onto unified cloud infrastructure",
       },
       {
-        text: 'Manage a 6-person external data engineering team via vendor partnership executing the internal data roadmap, alongside one full-time data engineer reporting directly to me',
+        text: 'Manage a 4-person external data engineering team via vendor partnership executing the internal data roadmap, alongside one full-time data engineer reporting directly to me',
         variants: ['playercoach'],
       },
       {
